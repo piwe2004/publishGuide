@@ -1,0 +1,447 @@
+@charset "utf-8";
+
+@import "_variable.scss";
+
+
+/* ==========================================================================
+   1. Box Sizing & Margin/Padding 초기화 (Modern Reset)
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ==========================================================================
+   2. HTML & Font 렌더링 최적화
+   ========================================================================== */
+html {
+  /* 가로 모드 전환 시 OS가 폰트 크기를 임의로 키우는 현상 방지 */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+
+  /* 폰트 안티앨리어싱 (더 선명하고 얇게 렌더링) */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ==========================================================================
+   3. Body: 최신 모바일 뷰포트 대응 및 스크롤 바운스 제어
+   ========================================================================== */
+body {
+  /* vh 대신 최신 dvh 단위 사용 (iOS 동적 툴바 영역 무시 버그 해결) */
+  min-height: 100dvh;
+  line-height: 1.5;
+  font-family: inherit;
+
+  /* iOS 당겨서 새로고침(Pull-to-refresh) 및 상하 바운스 효과 완벽 차단 */
+  overscroll-behavior-y: none;
+
+  /* 모바일 터치 시 생기는 파란색/회색 하이라이트 박스 제거 */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ==========================================================================
+   4. Media Elements 기본 구조화
+   ========================================================================== */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ==========================================================================
+   5. Form Controls 완벽 초기화 (모바일 UI 버그 핵심 타겟)
+   ========================================================================== */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+  /* iOS Safari 입력창 둥근 모서리 강제 적용 방지 */
+}
+
+/* iOS 검색 input의 기본 X 버튼 및 여백 제거 */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  display: none;
+}
+
+/* IE/Edge 비밀번호 입력 시 나오는 기본 눈알(Reveal) 아이콘 제거 */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+/* 모바일 텍스트 에어리어 가로 늘어남 방지 */
+textarea {
+  resize: vertical;
+}
+
+button,
+select {
+  cursor: pointer;
+}
+
+button:disabled,
+button.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  background-color: #999 !important;
+}
+
+button:focus,
+a:focus {
+  outline: 1px solid red;
+}
+
+/* ==========================================================================
+   6. Anchor & Lists
+   ========================================================================== */
+a {
+  text-decoration: none;
+  color: inherit;
+  /* 글자 아래로 뻗는 획(g, j, y 등)을 밑줄이 침범하지 않게 설정 */
+  text-decoration-skip-ink: auto;
+}
+
+ul,
+ol,
+li,
+dl,
+dt,
+dd {
+  list-style: none;
+}
+
+/* ==========================================================================
+   7. Table
+   ========================================================================== */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+/* ==========================================================================
+   8. iOS Safe Area (노치 디자인 대응 CSS 변수 셋팅)
+   ========================================================================== */
+:root {
+  --sat: env(safe-area-inset-top);
+  --sar: env(safe-area-inset-right);
+  --sab: env(safe-area-inset-bottom);
+  --sal: env(safe-area-inset-left);
+}
+
+/* ==========================================================================
+   9. Accessibility (A11y)
+   ========================================================================== */
+/* 스크린 리더용 숨김 텍스트 (화면에서 완벽히 사라지되 포커스는 유지) */
+.blind,
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* 시스템 설정에서 '애니메이션 줄이기'를 선택한 사용자 대응 */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+
+
+/* ==========================================================================
+   1. Spacing (Margin, Padding, Gap)
+   - 0부터 50까지는 5px 단위, 그 이후는 필요에 따라 추가
+   ========================================================================== */
+@for $i from 0 through 10 {
+  $val: $i * 5; // 0, 5, 10, 15, 20 ... 50
+
+  // Margin
+  .m-#{$val} {
+    margin: #{$val}px !important;
+  }
+
+  .mt-#{$val} {
+    margin-top: #{$val}px !important;
+  }
+
+  .mb-#{$val} {
+    margin-bottom: #{$val}px !important;
+  }
+
+  .ml-#{$val} {
+    margin-left: #{$val}px !important;
+  }
+
+  .mr-#{$val} {
+    margin-right: #{$val}px !important;
+  }
+
+  .mx-#{$val} {
+    margin-left: #{$val}px !important;
+    margin-right: #{$val}px !important;
+  }
+
+  .my-#{$val} {
+    margin-top: #{$val}px !important;
+    margin-bottom: #{$val}px !important;
+  }
+
+  // Padding
+  .p-#{$val} {
+    padding: #{$val}px !important;
+  }
+
+  .pt-#{$val} {
+    padding-top: #{$val}px !important;
+  }
+
+  .pb-#{$val} {
+    padding-bottom: #{$val}px !important;
+  }
+
+  .pl-#{$val} {
+    padding-left: #{$val}px !important;
+  }
+
+  .pr-#{$val} {
+    padding-right: #{$val}px !important;
+  }
+
+  .px-#{$val} {
+    padding-left: #{$val}px !important;
+    padding-right: #{$val}px !important;
+  }
+
+  .py-#{$val} {
+    padding-top: #{$val}px !important;
+    padding-bottom: #{$val}px !important;
+  }
+
+  // Gap (Flex/Grid에서 간격 띄울 때 필수)
+  .gap-#{$val} {
+    gap: #{$val}px !important;
+  }
+}
+
+/* ==========================================================================
+   2. Sizing (Width, Height)
+   - 모바일에서 자주 쓰는 %와 vh/vw 위주
+   ========================================================================== */
+$sizes: 25, 50, 75, 100;
+
+@each $size in $sizes {
+  .w-#{$size} {
+    width: percentage($size / 100) !important;
+  }
+
+  .h-#{$size} {
+    height: percentage($size / 100) !important;
+  }
+}
+
+.w-full {
+  width: 100% !important;
+}
+
+.h-full {
+  height: 100% !important;
+}
+
+.w-vw {
+  width: 100vw !important;
+}
+
+.h-vh {
+  height: 100dvh !important;
+}
+
+/* 모바일은 dvh 권장 */
+.w-auto {
+  width: auto !important;
+}
+
+.h-auto {
+  height: auto !important;
+}
+
+/* ==========================================================================
+   3. Flexbox (요즘 레이아웃의 90%를 차지)
+   ========================================================================== */
+.d-flex {
+  display: flex !important;
+}
+
+.d-inline-flex {
+  display: inline-flex !important;
+}
+
+.flex-column {
+  flex-direction: column !important;
+}
+
+.flex-row {
+  flex-direction: row !important;
+}
+
+.flex-wrap {
+  flex-wrap: wrap !important;
+}
+
+.flex-1 {
+  flex: 1 1 0% !important;
+}
+
+/* 남은 영역 꽉 채우기 */
+
+.justify {
+  &-start {
+    justify-content: flex-start !important;
+  }
+
+  &-center {
+    justify-content: center !important;
+  }
+
+  &-end {
+    justify-content: flex-end !important;
+  }
+  &-between {
+    justify-content: space-between !important;
+  }
+}
+
+.align{
+  &-start {
+    align-items: flex-start !important;
+  }
+  &-center {
+    align-items: center !important;
+  }
+  &-end {
+    align-items: flex-end !important;
+  }
+}
+
+/* ==========================================================================
+   4. Typography & Text (모바일 리스트, 카드 UI에 필수)
+   ========================================================================== */
+.text{
+  &-left {
+    text-align: left !important;
+  }
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.fw-bold {
+  font-weight: 700 !important;
+}
+
+.fw-medium {
+  font-weight: 500 !important;
+}
+
+.fw-regular {
+  font-weight: 400 !important;
+}
+
+/* 텍스트 말줄임표 (1줄) - 엄청 자주 씁니다 */
+.text-truncate {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+/* 텍스트 말줄임표 (2줄) - 게시판/리스트 제목용 */
+.text-truncate-2 {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* ==========================================================================
+   5. Display & Visibility
+   ========================================================================== */
+.d-none {
+  display: none !important;
+}
+
+.d-block {
+  display: block !important;
+}
+
+.d-inline-block {
+  display: inline-block !important;
+}
+
+.v-hidden {
+  visibility: hidden !important;
+}
+
+.v-visible {
+  visibility: visible !important;
+}
+
+/* ==========================================================================
+   6. Border Radius (버튼, 카드 등)
+   ========================================================================== */
+.rounded-sm {
+  border-radius: 4px !important;
+}
+
+.rounded-md {
+  border-radius: 8px !important;
+}
+
+.rounded-lg {
+  border-radius: 12px !important;
+}
+
+.rounded-full {
+  border-radius: 9999px !important;
+}
+
+/* 완전 둥근 알약 버튼 */

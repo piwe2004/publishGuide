@@ -1,0 +1,608 @@
+@charset "UTF-8";
+/* ==========================================================================
+   1. 유연한 Flexbox 믹스인
+   - 사용법: @include flex(가로정렬, 세로정렬, 방향, 랩핑);
+   - 기본값은 중앙 정렬(center)과 가로 방향(row)으로 세팅되어 있습니다.
+   ========================================================================== */
+/* (옵션) 자주 쓰는 레이아웃은 아예 숏컷 믹스인으로 빼두면 더 편합니다 */
+/* ==========================================================================
+   2. 말줄임표 (멀티 라인 대응)
+   - utilities에서는 클래스로 썼지만, 특정 컴포넌트 안에서만 쓰고 싶을 때
+   ========================================================================== */
+/* ==========================================================================
+   3. 모바일 스크롤바 숨기기 (리스트나 가로 스와이프 영역에 필수)
+   - 기능은 작동하되, 지저분한 스크롤바 디자인만 없앱니다.
+   ========================================================================== */
+/* ==========================================================================
+   4. 가상 요소(Pseudo-element) 초기화 숏컷
+   - ::before, ::after 쓸 때 매번 적기 귀찮은 속성들을 한 번에 세팅
+   ========================================================================== */
+/* ==========================================================================
+   5. 터치 영역 확장 (접근성)
+   - 눈에 보이는 버튼 크기는 작아도, 실제 터치되는 영역을 44px 이상으로 넓혀줌
+   ========================================================================== */
+/* ==========================================================================
+    BUTTON 디자이 가이드
+========================================================================== */
+.btn-item {
+  padding: 10px 20px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+.btn-item:hover {
+  background-color: #ececec;
+}
+.btn-item.btn-primary {
+  background: #ef4444;
+  color: #ffffff;
+}
+.btn-item.btn-primary:hover {
+  background: #dc2828;
+}
+.btn-item.btn-secondary {
+  background: #888888;
+  color: #ffffff;
+}
+.btn-item.btn-secondary:hover {
+  background: #666666;
+}
+.btn-item.btn-outline {
+  border: 1px solid #e5e7eb;
+  color: #1f2937;
+  background: #ffffff;
+}
+.btn-item.btn-outline:hover {
+  background: #f9fafb;
+}
+.btn-item.btn-block {
+  width: 100%;
+  display: flex;
+}
+.btn-item.btn-sm {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  border-radius: 6px;
+}
+.btn-item.btn-lg {
+  padding: 14px 24px;
+  font-size: 1.125rem;
+  border-radius: 10px;
+}
+.btn-item.btn :disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.step-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0 10px;
+}
+.step-box .step-box__right {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0 10px;
+}
+.step-box .step-box__right--line {
+  width: 80px;
+  height: 4px;
+  position: relative;
+  background-color: #d9d9d9;
+  border-radius: 10px;
+}
+.step-box .step-box__right--line::before {
+  height: 100%;
+  position: absolute;
+  border-radius: 10px;
+  background-color: red;
+  display: block;
+  content: "";
+}
+.step-box .step-box__right--line.step_1::before {
+  width: 33.33%;
+}
+[class*=ar__]::after {
+  width: 20px;
+  height: 20px;
+  margin-left: auto;
+  background-color: blue;
+  background-position: center;
+  background-size: 100%;
+  display: block;
+  content: "";
+  flex-shrink: 0;
+}
+.agree-box {
+  width: 100%;
+  position: relative;
+  border-radius: 10px;
+  border: 1px solid #999;
+}
+.agree-box input[type=checkbox], .agree-box input[type=radio] {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.agree-box input[type=checkbox]:checked + label:before, .agree-box input[type=checkbox]:checked + .agree-label:before, .agree-box input[type=checkbox] .agree-label.checked:before, .agree-box input[type=radio]:checked + label:before, .agree-box input[type=radio]:checked + .agree-label:before, .agree-box input[type=radio] .agree-label.checked:before {
+  background-color: red;
+  border-color: red;
+}
+.agree-box .agree-label {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 7px;
+  text-align: left;
+  word-break: keep-all;
+}
+.agree-box .agree-label::before {
+  width: 20px;
+  height: 20px;
+  background: #000;
+  display: block;
+  flex-shrink: 0;
+  content: "";
+}
+.agree-box__none-line .agree-label {
+  border: none;
+}
+.agree-box__list {
+  display: grid;
+  grid-template-rows: 0fr; /* 닫혀있을 때 */
+  transition: grid-template-rows 0.3s ease;
+}
+.agree-box__list--inner {
+  overflow: hidden;
+}
+.agree-box__list--item {
+  min-height: 0;
+}
+.agree-box__list--item .agree-label::before {
+  border: 1px solid #999;
+  border-radius: 5px;
+}
+.agree-box__list.list-open {
+  grid-template-rows: 1fr;
+}
+
+.contract-box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.contract-box .contract-box__tabs {
+  width: 100%;
+  padding: 0 10px;
+  box-sizing: border-box;
+  overflow-x: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0 10px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.contract-box .contract-box__tabs .contract-tab {
+  padding: 10px;
+}
+.contract-box .contract-box__tabs .contract-tab[aria-selected=true] {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.contract-box .contract-box__pages {
+  width: 100%;
+  min-height: 0;
+  flex: 1;
+  background-color: #999;
+  padding: 15px 0;
+  box-sizing: border-box;
+}
+
+.pdf-viewer {
+  background-color: #fff;
+  height: 100%;
+  overflow-y: auto;
+}
+.pdf-viewer[aria-hidden=true] {
+  display: none;
+}
+.pdf-viewer[aria-hidden=false] {
+  display: block;
+}
+
+.input-field .input-field__box {
+  padding: 10px;
+  border: 1px solid #d1d1d1;
+  border-radius: 7px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+}
+.input-field .input-field__box .input-box__label {
+  width: 100%;
+  font-size: 20px;
+  color: #d1d1d1;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.input-field .input-field__box .input-box__label.is-required {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2px;
+}
+.input-field .input-field__box .input-box__label.is-required:after {
+  color: red;
+  content: "*";
+  display: block;
+}
+.input-field .input-field__box.is-active {
+  border-color: #d1d1d1;
+  background-color: #f9f9f9;
+}
+.input-field .input-field__box .input-box__inner {
+  width: 100%;
+  height: 0;
+  position: absolute;
+  top: -100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0 20px;
+  transition: all 0.2s ease-in-out;
+}
+.input-field .input-field__box .input-box__inner span {
+  flex-shrink: 0;
+}
+.input-field .input-field__box .input-box__inner .input-box_item {
+  flex: 1;
+  width: 100%;
+}
+.input-field .input-field__box.tp-select .select-item {
+  display: none;
+}
+.input-field[class*=is-] .input-field__box {
+  border-color: #000;
+}
+.input-field[class*=is-] .input-field__box .input-box__label {
+  font-size: 12px;
+  color: #000;
+}
+.input-field[class*=is-] .input-field__box .input-box__inner {
+  height: 20px;
+  position: static;
+}
+.input-field[class*=is-] .input-field__text {
+  display: block;
+}
+.input-field .input-field__text {
+  display: none;
+  margin-top: 5px;
+  font-size: 0.8rem;
+  color: #999;
+}
+.input-field.is-error .input-field__box {
+  border-color: red;
+}
+.input-field.is-error .input-field__text, .input-field.is-error .input-box__label {
+  color: red !important;
+}
+
+/* ==========================================================================
+    팝업, 다이얼로그, 토스트 (기존 기능 유지)
+========================================================================== */
+.layer-field {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.layer-field.is-active {
+  display: flex;
+}
+.layer-field.is-active .layer-sheet {
+  display: flex;
+}
+.layer-field.is-visible .layer-dim {
+  opacity: 1;
+}
+.layer-field.is-visible .layer-sheet {
+  transform: scale(1) translateY(0) !important;
+  opacity: 1;
+}
+.layer-field > .layer-dim {
+  position: absolute;
+  inset: 0;
+  background: rgba(17, 24, 39, 0.6);
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+.layer-field .layer-sheet {
+  width: 90%;
+  max-width: 400px;
+  max-height: 90vh;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  transform: scale(0.8) translateY(20px);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+  opacity: 0;
+  overflow: hidden;
+}
+.layer-field .layer-sheet__handle {
+  width: 40px;
+  height: 4px;
+  background: #d1d5db;
+  border-radius: 4px;
+  margin: 12px auto 0;
+}
+.layer-field.l-full .layer-sheet {
+  width: 100%;
+  max-width: 100%;
+  height: 100vh;
+  max-height: 100vh;
+  border-radius: 0;
+  transform: translateY(100%);
+}
+.layer-field.l-full .layer-sheet .content-area {
+  padding: 0;
+}
+.layer-field.l-bottom {
+  align-items: flex-end;
+}
+.layer-field.l-bottom .layer-sheet {
+  max-width: 90%;
+  border-radius: 15px 15px 0 0;
+  transform: translateY(100%);
+  transition: transform 0.35s cubic-bezier(0.3, 1.1, 0.4, 1), opacity 0.3s ease;
+}
+
+.select-list {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+}
+.select-list .select-list__item {
+  width: 100%;
+}
+.select-list .select-list__item.item-selected {
+  border: 1px solid #000;
+}
+.select-list .select-list__item .btn-item {
+  width: 100%;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+/* --- Dialog --- */
+.dialog-ui {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-dialog);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.dialog-ui.is-active {
+  display: flex;
+}
+.dialog-ui.is-active .dialog-dim {
+  animation: dialogFadeIn 0.2s forwards;
+}
+.dialog-ui.is-active .dialog-inner {
+  animation: dialogPopIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+.dialog-ui.is-closing .dialog-dim {
+  animation: dialogFadeOut 0.2s forwards;
+}
+.dialog-ui.is-closing .dialog-inner {
+  animation: dialogPopOut 0.2s forwards;
+}
+.dialog-ui .dialog-dim {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+}
+.dialog-ui .dialog-inner {
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  width: 85%;
+  max-width: 320px;
+  background: var(--bg-white);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.dialog-ui .dialog-body {
+  padding: 30px 20px;
+  text-align: center;
+}
+.dialog-ui .dialog-footer {
+  display: flex;
+  border-top: 1px solid var(--border-color);
+}
+.dialog-ui .dialog-footer button {
+  flex: 1;
+  padding: 16px;
+  font-weight: 600;
+}
+.dialog-ui .dialog-footer button:hover {
+  background: #f9fafb;
+}
+.dialog-ui .dialog-footer .btn-cancel {
+  color: var(--text-sub);
+  border-right: 1px solid var(--border-color);
+}
+.dialog-ui .dialog-footer .btn-confirm {
+  color: var(--primary-color);
+}
+
+@keyframes dialogFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes dialogFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes dialogPopIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes dialogPopOut {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+}
+/* --- Toast --- */
+.toast-field {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  pointer-events: none;
+}
+.toast-field .toast-ui {
+  background: rgba(31, 41, 55, 0.9);
+  color: var(--bg-white);
+  padding: 12px 24px;
+  border-radius: 30px;
+  animation: toastFadeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+.toast-field .toast-ui.is-closing {
+  animation: toastFadeOut 0.3s forwards;
+}
+
+/* ==========================================================================
+    로딩 & 스켈레톤
+========================================================================== */
+/* --- Loading (전체화면) --- */
+.loading-ui {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: var(--z-loading);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: dialogFadeIn 0.2s forwards;
+}
+.loading-ui .loading-item {
+  width: 60px;
+  height: 60px;
+  background: var(--bg-white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #94a3b8;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Skeleton UI Layout --- */
+.skeleton-effect > * {
+  margin: 4px 0;
+  position: relative;
+  overflow: hidden;
+  background-color: #e2e8f0 !important;
+  border-radius: 6px;
+  color: transparent !important;
+  pointer-events: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.skeleton-effect > *::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  animation: skeletonLoading 1.5s infinite;
+}
+
+@keyframes skeletonLoading {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+@keyframes toastFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes toastFadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FULL POPUP</title>
+
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/style.css">
+
+    <script src="../js//plugin/jquery-4.0.0.min.js"></script>
+    <script src="../js/style.js"></script>
+</head>
+<body>
+    <div class="layer-field">
+        <div class="layer-sheet l-full">
+            <div class="header-area tp-layer">
+                <div class="header__side--left">
+                </div>
+                <div class="header__title">
+                    <h4>약관상세보기</h4>
+                </div>
+                <div class="header__side--right">
+                    <button type="button" class="layer-sheet__close" aria-label="닫기">닫기</button>
+                </div>
+            </div>
+            <!-- 
+                약관 관련 탭과 컨텐츠 영역 
+                - 탭 버튼
+                * aria-selected : 접근성에서 버튼이 선택이 되었는지 체크 하는 속성
+                * data-contractId : 탭의 아이디 같은 역활 탭과 내용의 매치를 도와주는 속성
+    
+                - 탭 컨텐츠 영역
+                * aria-hidden : 숨김여부 확인, 숨기지 않음(false), 숨기(true)
+                * data-contract : 탭의 데이터 아이디와 같은 데이터값의 컨텐츠가 보임
+            -->
+            <div class="content-area tp-layer">
+                <div class="contract-box">
+                    <ul class="contract-box__tabs">
+                        <li>
+                            <button type="button" class="contract-tab" aria-selected="true" data-contractId="test1">약관1</button>
+                        </li>
+                        <li>
+                            <button type="button" class="contract-tab" aria-selected="false" data-contractId="test2">약관2</button>
+                        </li>
+                        <li>
+                            <button type="button" class="contract-tab" aria-selected="false" data-contractId="test3">약관3</button>
+                        </li>
+                        <li>
+                            <button type="button" class="contract-tab" aria-selected="false" data-contractId="test4">약관4</button>
+                        </li>
+                    </ul>
+                    <div class="contract-box__pages">
+                        <div class="pdf-viewer" aria-hidden="false" data-contract="test1">PDF영역1</div>
+                        <div class="pdf-viewer" aria-hidden="true" data-contract="test2">PDF영역2</div>
+                        <div class="pdf-viewer" aria-hidden="true" data-contract="test3">PDF영역3</div>
+                        <div class="pdf-viewer" aria-hidden="true" data-contract="test4">PDF영역4</div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-area tp-layer">
+                <div class="button-area">
+                    <button type="button" class="btn-item primary">모두동의</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    
+</script>
+</html>

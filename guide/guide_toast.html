@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>UI 퍼블리싱 가이드</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/compotents.css">
+    <link rel="stylesheet" href="./guide.css">
+
+    <script src="../js//plugin/jquery-4.0.0.min.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/style.js"></script>
+
+</head>
+<body>
+
+    <section id="sec-toast" class="page-section">
+        <h2 class="section-title">토스트 (Toast)</h2>
+        <div class="content-card">
+            <p style="margin-bottom: 20px; color: var(--text-sub);">
+                화면 하단에서 잠시 나타났다가 사라지는 비방해성 알림 메시지입니다.
+                기본 시간은 3초입니다.
+            </p>
+            <div class="btn-group">
+                <button type="button" class="btn-item btn-primary" onclick="UI.toast.show('요청이 성공적으로 처리되었습니다.')">기본 토스트 (3초)</button>
+                <button type="button" class="btn-item btn-outline" onclick="UI.toast.show('항목이 삭제되었습니다.', 1500)">짧은 토스트 (1.5초)</button>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

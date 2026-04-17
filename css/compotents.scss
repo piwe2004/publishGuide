@@ -1,0 +1,676 @@
+@charset "utf-8";
+
+@import "_mixins.scss";
+@import "_variable.scss";
+
+/* ==========================================================================
+    BUTTON 디자이 가이드
+========================================================================== */
+
+.btn-item {
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: $white-color;
+    font-size: 1rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    &:hover{
+        background-color:$white-hover;
+    }
+    &.btn-primary {
+        background: $primary-color;
+        color: $white-color;
+        &:hover {
+            background: $primary-hover;
+        }
+    }
+
+    &.btn-secondary {
+        background: $secondary-color;
+        color: $white-color;
+        &:hover {
+            background: $secondary-hover;
+        }
+    }
+
+    &.btn-outline {
+        border: 1px solid $border-color;
+        color: $text-main;
+        background: $white-color;
+        &:hover {
+            background: #f9fafb;
+        }
+    }
+
+    &.btn-block {
+        width: 100%;
+        display: flex;
+    }
+
+    &.btn{
+        &-sm {
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            border-radius: 6px;
+        }
+        &-lg {
+            padding: 14px 24px;
+            font-size: 1.125rem;
+            border-radius: 10px;
+        }
+        :disabled {
+            opacity: 0.5; 
+            pointer-events: none;
+        }
+    }
+}
+
+.step-box{
+    @include flex(center, space-between);
+    gap:0 10px;
+    & &__left{
+
+    }
+    & &__right{
+        @include flex(center, space-between);
+        gap:0 10px;
+        &--line{
+            width:80px;
+            height:4px;
+            position: relative;
+            background-color:#d9d9d9;
+            border-radius:10px;
+            &::before{
+                height:100%;
+                position: absolute;
+                border-radius:10px;
+                background-color:red;
+                display: block;
+                content:"";
+            }
+            &.step_1::before{
+                width:33.33%;
+            }
+        }
+        &--text{
+        }
+    }
+}
+
+// 화살표
+[class*="ar__"]{
+    $ar:ar__;
+    &::after{
+        width:20px;
+        height:20px;
+        margin-left:auto;
+        background-color:blue;
+        background-position: center;
+        background-size:100%;
+        display: block;
+        content:'';
+        flex-shrink:0;
+    }
+    #{$ar}up::after{}
+    #{$ar}down::after{}
+    #{$ar}right::after{}
+    #{$ar}left::after{}
+}
+
+.agree-box{
+    width:100%;
+    position: relative;
+    border-radius:10px;
+    border:1px solid #999;
+    input[type="checkbox"], input[type="radio"]{
+        position:absolute;
+        top:0;
+        left:0;
+        &:checked + label:before, &:checked + .agree-label:before, .agree-label.checked:before{
+            background-color:red;
+            border-color:red;
+        }
+    }
+    .agree-label{
+        width:100%;
+        height:100%;
+        padding:10px;
+        @include flex(center, flex-start);
+        gap:7px;
+        text-align:left;
+        word-break: keep-all;
+        &::before{
+            width:20px;
+            height:20px;
+            background:#000;
+            display: block;
+            flex-shrink:0;
+            content:'';
+        }
+    }
+    &__none-line{
+        .agree-label{
+            border:none
+        }
+    }
+
+    &__list{
+        display: grid;
+        grid-template-rows: 0fr; /* 닫혀있을 때 */
+        transition: grid-template-rows 0.3s ease;
+        &--inner{
+            overflow: hidden;
+        }
+        &--item{
+            min-height: 0;
+            .agree-label{
+                &::before{
+                    border:1px solid #999;
+                    border-radius: 5px;
+                }
+            }
+        }
+        &.list-open{
+            grid-template-rows: 1fr;
+        }
+    }
+}
+
+.contract-box{
+    width:100%;
+    height: 100%;
+    @include flex(center);
+    flex-direction: column;
+    & &__tabs{
+        width:100%;
+        padding:0 10px;
+        box-sizing: border-box;
+        overflow-x: auto;
+        @include flex(center, flex-start);
+        gap:0 10px;
+        flex-shrink: 0;
+        white-space: nowrap;
+        .contract-tab{
+            padding:10px;
+            &[aria-selected="true"]{
+                text-decoration: underline;
+                text-underline-offset: 4px;
+            }
+        }
+    }
+    & &__pages{
+        width:100%;
+        min-height:0;
+        flex:1;
+        background-color:#999;
+        padding:15px 0;
+        box-sizing: border-box;
+    }
+}
+
+.pdf-viewer{
+    background-color:#fff;
+    height:100%;
+    overflow-y:auto;
+    &[aria-hidden="true"]{
+        display: none;
+    }
+    &[aria-hidden="false"]{
+        display: block;
+    }
+}
+
+.input-field{
+    $input-field:input-field;
+    $input-box:input-box;
+
+    .#{$input-field}__box{
+        padding:10px;
+        border:1px solid #d1d1d1;
+        border-radius: 7px;
+        @include flex(flex-start, center);
+        flex-direction: column;
+        gap:10px;
+        cursor: pointer;
+        transition: all .25s ease-in-out;
+        
+        .#{$input-box}__label{
+            width: 100%;
+            font-size:20px;
+            color:#d1d1d1;
+            transition: all .3s ease;
+            cursor: pointer;
+            &.is-required{
+                @include flex(center, flex-start);
+                gap:2px;
+                &:after{
+                    color:red;
+                    content:"*";
+                    display: block;
+                }
+            }
+        }
+        &.is-active{
+            border-color:#d1d1d1;
+            background-color:#f9f9f9;
+        }
+
+        .#{$input-box}__inner{
+            width:100%;
+            height:0;
+            position: absolute;
+            top:-100%;
+            overflow: hidden;
+            @include flex(center, space-between);
+            gap:0 20px;
+            transition: all .2s ease-in-out;
+            span{
+                flex-shrink: 0;
+            }
+            .#{$input-box}_item{
+                flex:1;
+                width:100%;
+            }
+        }
+        &.tp-select{
+            .select-item{
+                display: none;
+            }
+        }
+    }
+
+    &[class*="is-"]{
+        .#{$input-field}__box{
+            border-color:#000;
+            .#{$input-box}__label{
+                font-size:12px;
+                color:#000;
+            }
+            .#{$input-box}__inner{
+                height:20px;
+                position: static;
+            }
+        }
+        .#{$input-field}__text{
+            display: block;
+        }
+    }
+
+    &.is-focus, &.is-active{
+        
+    }
+    .#{$input-field}__text{
+        display: none;
+        margin-top:5px;
+        font-size:0.8rem;
+        color:#999;
+    }
+
+    &.is-error{
+        .#{$input-field}__box{
+            border-color:red;
+        }
+        .#{$input-field}__text, .#{$input-box}__label{
+            color:red !important;
+        }
+    }
+}
+
+
+/* ==========================================================================
+    팝업, 다이얼로그, 토스트 (기존 기능 유지)
+========================================================================== */
+
+// Layer Sheet 영역
+.layer-field {
+    width:100%;
+    height:100%;
+    position: fixed;
+    top:0;
+    left:0;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    
+    &.is-active{
+        display: flex;
+        .layer-sheet{
+            display: flex;
+        }
+    }
+    &.is-visible {
+        .layer-dim { 
+            opacity: 1;
+        }
+        .layer-sheet {
+            transform: scale(1) translateY(0) !important;
+            opacity: 1;
+        }
+    }
+    > .layer-dim{
+        position: absolute;
+        inset: 0;
+        background: $dim-color;
+        transition: opacity 0.3s ease;
+        opacity: 0;
+    }
+    .layer-sheet{
+        width: 90%;
+        max-width: 400px; 
+        max-height: 90vh;
+        border-radius: 15px; 
+        display: flex;
+        flex-direction: column;
+        background: $white-color;
+        transform: scale(0.8) translateY(20px);
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+        opacity: 0; 
+        overflow: hidden;
+
+        &__handle {
+            width: 40px;
+            height: 4px;
+            background: #d1d5db;
+            border-radius: 4px;
+            margin: 12px auto 0;
+        }
+
+    }
+
+    &.l-full{
+        .layer-sheet{
+            width: 100%;
+            max-width:100%;
+            height:100vh;
+            max-height: 100vh;
+            border-radius:0;
+            transform: translateY(100%);
+            .content-area{
+                padding:0;
+            }
+        }
+    }
+
+    &.l-bottom{
+        align-items: flex-end;
+        .layer-sheet{
+            max-width:90%;
+            border-radius:15px 15px 0 0;
+            transform: translateY(100%);
+            transition: transform 0.35s cubic-bezier(0.3, 1.1, 0.4, 1), opacity 0.3s ease;
+        }
+    }
+
+}
+
+.select-list{
+    width:100%;
+    @include flex(flex-start, center);
+    flex-direction: column;
+    gap:10px;
+    & &__item{
+        width:100%;
+        &.item-selected{
+            border:1px solid #000;
+        }
+         .btn-item{
+            width: 100%;
+            justify-content: flex-start;
+            text-align: left;
+        }
+    }
+}
+
+/* --- Dialog --- */
+.dialog-ui {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-dialog);
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    &.is-active {
+        display: flex;
+
+        .dialog-dim {
+            animation: dialogFadeIn 0.2s forwards;
+        }
+
+        .dialog-inner {
+            animation: dialogPopIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+    }
+
+    &.is-closing {
+        .dialog-dim {
+            animation: dialogFadeOut 0.2s forwards;
+        }
+
+        .dialog-inner {
+            animation: dialogPopOut 0.2s forwards;
+        }
+    }
+
+    .dialog-dim {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
+        opacity: 0;
+    }
+
+    .dialog-inner {
+        position: relative;
+        z-index: 1;
+        opacity: 0;
+        width: 85%;
+        max-width: 320px;
+        background: var(--bg-white);
+        border-radius: 16px;
+        overflow: hidden;
+    }
+
+    .dialog-body {
+        padding: 30px 20px;
+        text-align: center;
+    }
+
+    .dialog-footer {
+        display: flex;
+        border-top: 1px solid var(--border-color);
+
+        button {
+            flex: 1;
+            padding: 16px;
+            font-weight: 600;
+
+            &:hover {
+                background: #f9fafb;
+            }
+        }
+
+        .btn-cancel {
+            color: var(--text-sub);
+            border-right: 1px solid var(--border-color);
+        }
+
+        .btn-confirm {
+            color: var(--primary-color);
+        }
+    }
+}
+
+@keyframes dialogFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes dialogFadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes dialogPopIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes dialogPopOut {
+    from {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    to {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+}
+
+/* --- Toast --- */
+.toast-field {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: var(--z-toast);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    pointer-events: none;
+    .toast-ui {
+        background: rgba(31, 41, 55, 0.9);
+        color: var(--bg-white);
+        padding: 12px 24px;
+        border-radius: 30px;
+        animation: toastFadeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    
+        &.is-closing {
+            animation: toastFadeOut 0.3s forwards;
+        }
+    }
+}
+
+
+
+/* ==========================================================================
+    로딩 & 스켈레톤
+========================================================================== */
+/* --- Loading (전체화면) --- */
+.loading-ui {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: var(--z-loading);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: dialogFadeIn 0.2s forwards;
+
+    &.is-active {
+    }
+
+    .loading-item{
+        width: 60px;
+        height: 60px;
+        background: var(--bg-white);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #94a3b8;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* --- Skeleton UI Layout --- */
+.skeleton-effect {    
+    > * {
+        margin:4px 0;
+        position: relative;
+        overflow: hidden;
+        background-color: #e2e8f0 !important;
+        border-radius: 6px;
+        color: transparent !important;
+        pointer-events: none;
+        user-select: none;
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+            animation: skeletonLoading 1.5s infinite;
+        }
+    }
+
+    // .skel-line {
+    //     height: 18px;
+    //     border-radius: 4px;
+    // }
+
+    // .skel-box {
+    //     height: 80px;
+    //     border-radius: 8px;
+    //     margin-top: 10px;
+    // }
+}
+@keyframes skeletonLoading {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes toastFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes toastFadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
