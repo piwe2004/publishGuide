@@ -15,59 +15,179 @@
 
 const UI = {
     activePopupCount: 0,
-    lastFocusedElement: null , // 팝업 닫힐 때 돌아갈 포커스 기억
-    popup: {    // Popup
-        open: function(id) {
-            const el = document.getElementById(id);
-            if (!el) return;
-            
-            // 현재 포커스 요소 저장
-            UI.lastFocusedElement = document.activeElement;
+    lastFocusedElement: null, // 팝업 닫힐 때 돌아갈 포커스 기억
+    // UI 공통 초기화 함수
+    init: function() {
+        this.bindEvents();
+    },
+    /**
+     * @description 버튼과 팝업을 연결하고 라이프사이클(콜백)을 제어합니다.
+     * 데이터 초기화, API 호출, 상태(confirm/cancel)에 따른 분기 등 비즈니스 로직이 필요한 경우 사용합니다.
+     * * @param {string} btnSelector - 팝업을 열 트리거 버튼의 CSS 선택자 (예: '#btn-submit', '.btn-open')
+     * @param {string} popupId - 열고자 하는 팝업의 고유 ID (예: 'bottom1')
+     * @param {Object} [callbacks] - 팝업 라이프사이클 콜백 객체
+     * @param {Function} [callbacks.open_callback] - 팝업이 열린 직후 실행될 함수
+     * @param {Function} [callbacks.close_callback] - 팝업이 닫힌 후 실행될 함수. 
+     * 매개변수 status('confirm' | 'cancel')를 통해 닫힌 이유를 구분 가능.
+     * * @example
+     * UI.popup.bind('#btn-show-terms', 'terms-popup', {
+     *  open_callback: () => console.log('팝업 열림, 데이터 초기화'),
+     *  close_callback: (status) => {
+     *      if (status === 'cancel') console.log('X버튼이나 배경을 클릭해 닫힘 (취소)');
+     *      if (status === 'confirm') console.log('내부에서 UI.popup.close(id, "confirm")을 호출해 닫힘 (완료)');
+     *  }
+     * });
+     */
+    bindEvents: function() {
+        document.addEventListener('click', (e) => {
+            const closeBtn = e.target.closest('[data-layer-close], [data-layer-confirm], [data-layer-cancel]');
+            if (closeBtn) {
+                const parentPopup = closeBtn.closest('.layer-field');
+                const targetId = parentPopup.dataset.layerId
 
-            // popup가 open이 되었을떄
-            el.classList.add('is-active');
-            
-            // 팝업의 부드럽게 올라오는 애니메이션 효과 클래스
-            requestAnimationFrame(() => {
-                 requestAnimationFrame(() => {
-                    el.classList.add('is-visible'); 
-                }); 
-            });
-            UI.activePopupCount++;
-            document.body.classList.add('is-locked');
-            
-            
-            if (el.dataset.dimClose === 'true' && !el.dataset.dimBound) {
-                const dim = el.querySelector('.layer-dim');
-                if (dim) {
-                    dim.addEventListener('click', () => this.close(id));
-                }
-                el.dataset.dimBound = 'true';
+                const _status = 'layerClose' in e.target.dataset 
+                    ? "close" : 'layerCancel' in e.target.dataset 
+                    ? "cancel" : "confirm";
+                    
+                this.popup.close(targetId, _status);
+                // debugger;
             }
-            // 접근성: 팝업 내부로 강제 포커스 이동
-            const innerPopup = el.querySelector('.layer-sheet');
-            if(innerPopup){
-                innerPopup.setAttribute("tabIndex", "0");
-                innerPopup.focus();
-            } 
-        },
-        close: function(id) {
-            const el = document.getElementById(id);
-            if (!el) return;
-            el.classList.remove('is-visible');
-            setTimeout(() => {
-                el.classList.remove('is-active');
-                UI.activePopupCount = Math.max(0, UI.activePopupCount - 1);
-                if (UI.activePopupCount === 0 && !document.querySelector('.dialog-ui.is-active')) {
-                    document.body.classList.remove('is-locked');
+        });
+    },
+    popup: {    // Popup
+        _hooks: {},
+        open: function(id) {
+            // Promise를 반환하도록 감싸기
+            return new Promise((resolve) => {
+                const el = document.querySelector(`[data-layer-id="${id}"]`);
+                if (!el) return resolve(false); // 요소가 없으면 false 반환하며 종료
+                
+                // 현재 포커스 요소 저장
+                UI.lastFocusedElement = document.activeElement;
+
+                // popup이 open이 되었을 때
+                el.classList.add('is-active');
+                
+                // 팝업의 부드럽게 올라오는 애니메이션 효과 클래스
+                requestAnimationFrame(() => {
+                     requestAnimationFrame(() => {
+                        el.classList.add('is-visible'); 
+                        resolve(true); // 애니메이션 클래스가 붙은 직후에 이벤트를 넘김
+                    }); 
+                });
+                
+                UI.activePopupCount++;
+                document.body.classList.add('is-locked');
+                
+                if (el.dataset.dimClose === 'true' && !el.dataset.dimBound) {
+                    const dim = el.querySelector('.layer-dim');
+                    if (dim) {
+                        dim.addEventListener('click', () => this.close(id));
+                    }
+                    el.dataset.dimBound = 'true';
                 }
                 
-                // 접근성: 팝업 닫힌 후 원래 버튼으로 포커스 복원
-                if (UI.lastFocusedElement) {
-                    UI.lastFocusedElement.focus();
-                    UI.lastFocusedElement = null;
+                // 접근성: 팝업 내부로 강제 포커스 이동
+                const innerPopup = el.querySelector('.layer-sheet');
+                if(innerPopup){
+                    innerPopup.setAttribute("tabIndex", "0");
+                    innerPopup.focus();
+                } 
+            });
+        }
+         /**
+         * @description [명시적 이벤트 바인딩] 버튼과 팝업을 연결하고 라이프사이클을 제어합니다.
+         * @param {string} popupId - layer 의 고유 ID
+         * @param {Function} [callbacks.before_close] - 팝업이 닫히기 전에 실행이 되어야될 이벤트들
+         * @param {Function} [callbacks.open_callback] - 팝업이 열릴 때 실행
+         * @param {Function} [callbacks.confirm_callback] - '확인/완료' 로 닫힐 때 실행
+         * @param {Function} [callbacks.cancel_callback] - 'X버튼/배경' 을 눌러 취소될 때 실행
+         * @param {boolean} selectCheck - 셀렉트 기능이 있는 레이어팝업 여부 기본값 false
+         */,
+        close: async function(id, status = 'cancel') {
+            const hook = this._hooks[id];
+
+            // 확인(confirm) 상태로 닫으려 할 때, before_close가 있다면 실행
+            if (hook && typeof hook.before_close === 'function') {
+                // 사용자가 콜백 안에서 UI.dialog를 썼을 경우를 대비해 await로 기다림
+                const canClose = await hook.before_close(status);
+                
+                // 만약 before_close에서 false를 반환했다면 창을 닫지 않고 여기서 중단
+                if (canClose === false) {
+                    return false; 
                 }
-            }, 300);
+            }
+
+            // 검사를 무사히 통과했다면 기존처럼 팝업 닫기
+            return new Promise((resolve) => {
+                const el = document.querySelector(`[data-layer-id="${id}"]`);
+                if (!el) return resolve(false);
+                
+                el.classList.remove('is-visible');
+                setTimeout(() => {
+                    el.classList.remove('is-active');
+                    UI.activePopupCount = Math.max(0, UI.activePopupCount - 1);
+                    if (UI.activePopupCount === 0 && !document.querySelector('.dialog-ui.is-active')) {
+                        document.body.classList.remove('is-locked');
+                    }
+                    
+                    if (UI.lastFocusedElement) {
+                        UI.lastFocusedElement.focus();
+                        UI.lastFocusedElement = null;
+                    }
+                    
+                    // 닫힌 후 상태를 보고 close_callback이 실행됨
+                    el.dispatchEvent(new CustomEvent('popup-closed', { detail: { id, status } }));
+                    resolve(true);
+                }, 300);
+            });
+        },
+        /**
+         * @description 이벤트 바인딩, 버튼과 팝업을 연결하고 라이프사이클을 제어합니다.
+         * @param {string} popupId - layer 의 고유 ID
+         * @param {Function} [callbacks.before_close] - 팝업이 닫히기 전에 실행이 되어야될 이벤트들
+         * @param {Function} [callbacks.open_callback] - 팝업이 열릴 때 실행
+         * @param {Function} [callbacks.confirm_callback] - '확인/완료' 로 닫힐 때 실행
+         * @param {Function} [callbacks.cancel_callback] - 'X버튼/배경' 을 눌러 취소될 때 실행
+         * @param {boolean} selectCheck - 셀렉트 기능이 있는 레이어팝업 여부 기본값 false
+         */
+        bind: function(popupId, { before_close, open_callback, close_callback, cancel_callback, selectCheck=false } = {}) {
+            const btn = document.querySelector(`[data-layer-btn="${popupId}"]`);
+            const popupEl = document.querySelector(`[data-layer-id="${popupId}"]`);
+
+            // 버튼(btn)이 없더라도 popupEl만 있으면 콜백은 달아주도록 수정
+            if (!popupEl) return;
+            // callback들을 저장소에 등록
+            this._hooks[popupId] = {
+                before_close,
+                open_callback,
+                close_callback,
+                cancel_callback
+            };
+
+            // 버튼 클릭 이벤트 (버튼이 있을 때만)
+            if (btn) {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault(); 
+                    this.open(popupId).then(() => {
+                        if (typeof open_callback === 'function') open_callback();
+                    });
+                });
+            }
+
+            // 닫기 이벤트
+            if (typeof close_callback === 'function' || typeof cancel_callback === 'function') {
+                popupEl.addEventListener('popup-closed', (e) => {
+                    const status = e.detail.status;
+                    // confirm_callback이 아니라 파라미터로 받은 close_callback으로 수정!
+                    if (status === 'close' && typeof close_callback === 'function') {
+                        close_callback();
+                    } 
+                    else if (status === 'cancel' && typeof cancel_callback === 'function') {
+                        cancel_callback();
+                    }
+                });
+            }
         }
     },
 
@@ -78,7 +198,7 @@ const UI = {
                 ? `<button type="button" class="btn-confirm" id="${dialogId}_confirm">${confirmText}</button>`
                 : `<button type="button" class="btn-cancel" id="${dialogId}_cancel">${cancelText}</button><button type="button" class="btn-confirm" id="${dialogId}_confirm">${confirmText}</button>`;
             
-            // A11y: 커스텀 다이얼로그도 role="alertdialog" 추가
+            // 커스텀 다이얼로그도 role="alertdialog" 추가
             const html = `
                 <div id="${dialogId}" class="dialog-ui" role="alertdialog" aria-modal="true" aria-describedby="${dialogId}_desc">
                     <div class="dialog-dim" aria-hidden="true"></div>
@@ -172,18 +292,24 @@ const UI = {
         }        
     },
 
-    select: function(id, option, callback){
+    select: function(id, option, {open_callback, close_callback}={}){
         // bottom sheet의 select 속성을 가진 태그
         const _selectEl = document.querySelector(`[data-select-list="${id}"]`);
         if (!_selectEl) return; // 방어 코드
-        const _selectField = document.querySelector(`[data-select-field="${id}"]`);
+        const _selectField = document.querySelector(`[data-layer-btn="${id}"]`);
         const _valueEl = _selectField.querySelector("input.select-value");
         const _optionList = option;
+
+        UI.popup.bind(id, {
+            open_callback:open_callback,
+            close_callback:close_callback,
+            selectCheck:true
+        });
         
         _optionList.forEach((opt, idx) =>{
             const _optionItem = Object.assign(document.createElement("li"), {
                 className: "select-list__item",
-            })
+            });
             _optionItem.setAttribute("role", "option");
             _optionItem.setAttribute("aria-selected", false);
             
@@ -191,149 +317,36 @@ const UI = {
                 type: "button",
                 className:"btn-item",
                 innerText: opt.text,
-            })
+            });
             _optionBtn.value = opt.value;
             _optionBtn.dataset.selectIdx = idx;
             
             _optionBtn.addEventListener("click", (e)=>{
                 const _targetBtn = e.currentTarget;
-
+                
                 _selectEl.querySelectorAll("li").forEach(items => {
                     items.classList.remove("item-selected");
                     items.setAttribute("aria-selected", false);
                 });
-
                 _targetBtn.parentNode.setAttribute("aria-selected", true);
                 _targetBtn.parentNode.classList.add("item-selected");
                 _valueEl.value = _targetBtn.value;
-                UI.popup.close(id);
+                checkInputStatus(_selectField);
+
+                if(typeof opt.callback === "function"){
+                    opt.callback();
+                }
+                
+                // 업데이트된 Promise 방식 활용 (.then 사용)
+                UI.popup.close(id, 'confirm');
             });
     
             _optionItem.append(_optionBtn);
             _selectEl.append(_optionItem);
-        });
-
-        _selectField.onclick = () =>{
-            UI.popup.open(id);
-        } 
-
-
+        }); 
     }
 }
 
-const layerSheet = (() => {
-    // 내부 공통 유틸리티 (외부에서 접근 불가 - 캡슐화)
-    const _getEl = (id) => document.querySelector(`[data-layerId="${id}"]`);
-
-    return {
-        /**
-         * @method open
-         * @param {String} id - 레이어 ID
-         * @param {Object} options - 오픈 시 필요한 인자 (배경잠금, 타이머, 포커스 등)
-         * @param {Function} callback - 오픈 후 실행
-         */
-        open: (id, {title, callback} = {}) => {
-            const el = _getEl(id);
-            const _layerField = document.querySelector(".layer-field");
-            if (!el) return;
-            if(!_layerField.classList.contains("layer-open")){
-                document.body.style.overflow = 'hidden';
-                _layerField.classList.add("layer-open");
-            }
-            
-            el.classList.add('is-active');
-            el.setAttribute('aria-hidden', 'false');
-            
-            const _closeBtn = el.querySelector(".layer-sheet__close");
-            _closeBtn.addEventListener("click", ()=>{
-                layerSheet.close(id);
-            });
-
-            if (typeof callback === 'function') callback(el);
-        },
-        /**
-         * @method close
-         * @param {String} id - 레이어 ID
-         * @param {Object} result - 닫을 때 넘겨줄 데이터나 상태값
-         * @param {Function} callback - 닫힌 후 실행
-         */
-        close: (id, result = {}, callback) => {
-            const el = _getEl(id);
-            if (!el) return;
-
-            // 닫기 전용 공통 로직
-            document.body.style.overflow = '';
-
-            el.classList.remove('is-active');
-            el.setAttribute('aria-hidden', 'true');
-            
-            // 닫을 때는 오픈 때와는 다른 '결과 데이터'를 콜백으로 전달
-            if (typeof callback === 'function') callback(result);
-        }
-    };
-})();
-
-
-
-/**
- * @param {id} - (필수) Select의 ID
- * @param {layerId} - (필수) select를 넣을 layer ID
- * @param {title} - (선택) 바텀 시트의 타이틀
- * @param {callback} - (선택) 이벤트 처리 후 callback
- * @param {option} - (선택) 셀렉트 시트의 기타 옵션들
- * @description - Select 바텀 시트, select의 id값을 가져와 바텀시트에 들어갈 옵션을 만듬
- */
-const selectSheet = (id, layerId, {title, callback, option={}} = {}) =>{
-
-    
-    if (!_selectId) return; // 방어 코드
-
-    const _parentEl = _selectId.closest(".input-box.tp-select");
-    if (!_parentEl) return;
-    
-    const selectOpen = () => {
-        const _selectText = document.querySelector(`[data-select="${id}"]`);
-        const _layerSheet = document.querySelector(`[data-layerId="${layerId}"]`);
-        const _isSelect = _selectText.innerText === "" ? false : true;
-        const _selectTitle = _selectId.parentNode.parentNode.querySelector(".input-box__label").innerText;
-        const _optionList = _selectId.querySelectorAll("option");
-        const _optionBox = document.createElement("ul");
-    
-        _optionBox.setAttribute("role", "listbox");
-        _optionBox.setAttribute("aria-label", `${_selectTitle} 선택 항목`);
-        
-        _optionList.forEach((opt, idx) =>{
-            if(opt.disabled) return;
-            const _isSelected = _isSelect && opt.selected;
-            const _optionItem = Object.assign(document.createElement("li"), {
-                className: `select-item ${_isSelected ? 'is-selected' : ''}`,
-            })
-            _optionItem.setAttribute("role", "option");
-            _optionItem.setAttribute("aria-selected", _isSelected);
-            
-            const _optionBtn = Object.assign(document.createElement("button"), {
-                type: "button",
-                innerText: opt.text,
-            })
-            _optionBtn.value = opt.value;
-            _optionBtn.dataset.selectIdx = idx;
-            
-            _optionBtn.addEventListener("click", (e)=>{
-                _optionList[idx].selected = true;
-                _selectText.innerText = e.currentTarget.value;
-                layerSheet.close(layerId);
-                _layerSheet.querySelector(".content-area").innerHTML="";
-            });
-    
-            _optionItem.append(_optionBtn);
-            _optionBox.append(_optionItem);
-        })
-        _layerSheet.querySelector(".content-area").append(_optionBox);
-    }
-    
-    _parentEl.onclick = () => {
-        selectOpen();
-        layerSheet.open(layerId);
-    }
-
-}
+document.addEventListener('DOMContentLoaded', () => {
+    UI.init();
+});

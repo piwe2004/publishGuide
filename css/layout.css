@@ -1,5 +1,4 @@
 @charset "UTF-8";
-@import "./common.css";
 /* ==========================================================================
    1. 유연한 Flexbox 믹스인
    - 사용법: @include flex(가로정렬, 세로정렬, 방향, 랩핑);
@@ -114,24 +113,37 @@
   justify-content: space-between;
   gap: 0 10px;
 }
-.button-area > .btn-item {
+.button-area .btn-item {
   flex: 1;
 }
 .button-area.tp-2 > .btn-item:first-child {
-  flex: 0 0 20%;
+  flex: 2;
 }
 .button-area.tp-3 > .btn-item:first-child {
-  flex: 0 0 30%;
+  flex: 3%;
 }
 .button-area.tp-4 > .btn-item:first-child {
-  flex: 0 0 40%;
+  flex: 4%;
 }
 .button-area.tp-6 > .btn-item:first-child {
-  flex: 0 0 60%;
+  flex: 6;
 }
 .button-area.tp-7 > .btn-item:first-child {
-  flex: 0 0 70%;
+  flex: 7%;
 }
 .button-area.tp-8 > .btn-item:first-child {
-  flex: 0 0 80%;
+  flex: 8%;
+}
+
+.agree-field {
+  display: flex;
+  flex-direction: column;
+  gap: 20px 0;
+}
+.agree-field .agree-field__list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px 0;
 }

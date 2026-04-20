@@ -99,13 +99,6 @@
     transform: translateY(0);
   }
 }
-.btn-group {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-
 .content-card {
   background: var(--bg-white);
   border-radius: 12px;
@@ -144,13 +137,3 @@
 
 /* 헤더 목업 (UI 박스) */
 /* 스켈레톤 가이드 (이미지 2의 구조 재현) */
-.skeleton-guide-box {
-  background: var(--bg-white);
-  border: 1px solid var(--border-color);
-  padding: 20px;
-  max-width: 400px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}

@@ -1,6 +1,5 @@
 @charset "utf-8";
-@import "./common.css";
-@import "_mixins.scss";
+@use "_mixins" as *;
 
 /* 기본 레이아웃 */
 
@@ -94,7 +93,7 @@
 .button-area{
     @include flex(center, space-between);
     gap:0 10px;
-    > .btn-item{
+    .btn-item{
         flex:1;
     }
 
@@ -104,33 +103,44 @@
     &.tp{
         &-2{
             > .btn-item:first-child{
-                flex: 0 0 20%;
+                flex:2;
             }
         }
         &-3{
             > .btn-item:first-child{
-                flex: 0 0 30%
+                flex:3%
             }
         }
         &-4{
             > .btn-item:first-child{
-                flex: 0 0 40%
+                flex:4%
             }
         }
         &-6{
             > .btn-item:first-child{
-                flex: 0 0 60%;
+                flex:6;
             }
         }
         &-7{
             > .btn-item:first-child{
-                flex: 0 0 70%
+                flex:7%
             }
         }
         &-8{
             > .btn-item:first-child{
-                flex: 0 0 80%
+                flex:8%
             }
         }
+    }
+}
+
+.agree-field{
+    display: flex;
+    flex-direction: column;
+    gap:20px 0;
+    & &__list{
+        @include flex(center, center);
+        flex-direction:column;
+        gap:10px 0;
     }
 }

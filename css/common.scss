@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-@import "_variable.scss";
+@use "_variable" as *;
 
 
 /* ==========================================================================
@@ -181,7 +181,11 @@ table {
 }
 
 
-
+button svg,
+button use,
+button path {
+    pointer-events: none;
+}
 
 /* ==========================================================================
    1. Spacing (Margin, Padding, Gap)

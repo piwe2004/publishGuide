@@ -21,16 +21,3 @@
    5. 터치 영역 확장 (접근성)
    - 눈에 보이는 버튼 크기는 작아도, 실제 터치되는 영역을 44px 이상으로 넓혀줌
    ========================================================================== */
-@import "./compotents.css";
-.agree-field {
-  display: flex;
-  flex-direction: column;
-  gap: 20px 0;
-}
-.agree-field .agree-field__list {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 10px 0;
-}

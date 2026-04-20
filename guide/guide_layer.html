@@ -6,7 +6,7 @@
     <title>UI 퍼블리싱 가이드</title>
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/layout.css">
-    <link rel="stylesheet" href="../css/compotents.css">
+    <link rel="stylesheet" href="../css/components.css">
     <link rel="stylesheet" href="./guide.css">
 
     <script src="../js//plugin/jquery-4.0.0.min.js"></script>
@@ -41,23 +41,47 @@
                 화면 내에서 추가적인 정보를 보여주거나 입력을 받을 때 사용하는 모달 컴포넌트입니다.
             </p>
             <div class="btn-group">
-                <button type="button" class="btn-item btn-primary" onclick="UI.popup.open('layer1')">일반 레이어 팝업</button>
-                <button type="button" class="btn-item btn-outline" onclick="UI.popup.open('full1')">풀 팝업 (전체화면)</button>
+                <button type="button" class="btn-item btn-primary" data-layer-btn="layer1">일반 레이어 팝업</button>
+                <button type="button" class="btn-item btn-primary" data-layer-btn="layer_bind1">callback 레이어 팝업</button>
+                <button type="button" class="btn-item btn-outline" data-layer-btn="full1">풀 팝업 (전체화면)</button>
                 <button type="button" class="btn-item btn-outline" onclick="UI.popup.open('full2')">풀 팝업 (하단버튼)</button>
-                <button type="button" class="btn-item btn-secondary" onclick="UI.popup.open('bottom1')">바텀 시트</button>
+                <button type="button" class="btn-item btn-secondary" onclick="UI.popup.open('bottom1')">바텀 시트(select와는 다름 )</button>
+
+                <p style="font-size: 1.1rem; margin-bottom: 16px; margin-top: 30px;">SELECT BOX</p>
+                <div class="input-field tp-select" tabindex="0" data-layer-btn="select1">
+                <div class="input-field__box">
+                    <label for="select1_label" class="input-box__label">통신사</label>
+                    <div class="input-box__inner" aria-hidden="true">
+                        <input type="text" name="select1_label" id="select1_label" class="input-box__item select-value" />
+                    </div>
+                </div>
+            </div>
             </div>
         </div>
     </section>
     </div>
 
+    <!-- 
+        * 레이어팝업 호출시 버튼에 inline으로 onclick이벤트를 선언하거나 script안에 button 클릭 이벤트를 선언하면 됩니다.
+        * layer-field에 data-layer-id는 필수로 입력(레이어 고유 아이디값) 해당 data값으로 레이어를 찾음
+        * callback없이 일반적으로 버튼을 눌러서 layer를 열고 닫을때는 각 버튼에 해당 이벤트 선언하면 됩니다.
+        * 레이어 열기 : UI.popup.open(레이어의 data-layer-id 값)
+        * 레이어 닫기 : UI.popup.close(레이어의 data-layer-id 값)
+        * 만약 레이어를 열거나 닫을때 callback 이벤트가 필요하다면
+        * 스크립트에 UI.popup.bind(레이어 고유 아이디값);으로 선언
+        * 닫기 버튼은 data-layer-cancel로 헤더에 x버튼 이벤트
+        * 닫기 버튼은 data-layer-close로 닫기 기능 선언
+        * 확인 버튼은 data-layer-confirm로 닫기 기능 선언
+        * 자세한 js 사용법은 common.js 참고
+    -->
 
     <!-- [1] Layer Popup -->
-    <div id="layer1" class="layer-field" data-dim-close="true" role="dialog" aria-modal="true">
+    <div data-layer-id="layer_bind1" class="layer-field" data-dim-close="true" role="dialog" aria-modal="true">
         <div class="layer-dim"></div>
         <div class="layer-sheet">
             <div class="header-area tp-layer justify-end">
                 <div class="header__side--right">
-                    <button type="button" aria-label="닫기" onclick="UI.popup.close('layer1')">
+                    <button type="button" aria-label="닫기" data-layer-cancel>
                         <svg><use href="#icon-close"></use></svg>
                     </button>
                 </div>
@@ -69,19 +93,19 @@
             </div>
             <div class="footer-area tp-layer">
                 <div class="button-area">
-                    <button type="button" class="btn-item btn-secondary" onclick="UI.popup.close('layer1')">닫기</button>
-                    <button type="button" class="btn-item btn-primary" onclick="UI.popup.close('layer1')">확인</button>
+                    <button type="button" class="btn-item btn-secondary" data-layer-close>닫기</button>
+                    <button type="button" class="btn-item btn-primary" data-layer-confirm>확인</button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- [2-1] Full Popup -->
-    <div id="full1" class="layer-field l-full" role="dialog" aria-modal="true">
+    <div data-layer-id="full1" class="layer-field l-full" role="dialog" aria-modal="true">
         <div class="layer-sheet">
             <div class="header-area tp-layer justify-end">
                 <div class="header__side--right">
-                    <button type="button" aria-label="닫기" onclick="UI.popup.close('full1')">
+                    <button type="button" aria-label="닫기" data-layer-cancel>
                         <svg><use href="#icon-close"></use></svg>
                     </button>
                 </div>
@@ -93,7 +117,7 @@
     </div>
 
     <!-- [2-2] Full Popup -->
-    <div id="full2" class="layer-field l-full" role="dialog" aria-modal="true">
+    <div data-layer-id="full2" class="layer-field l-full" role="dialog" aria-modal="true">
         <div class="layer-sheet">
             <div class="header-area tp-layer">
                 <div class="header__side--left">
@@ -102,7 +126,7 @@
                     <h4>약관상세보기</h4>
                 </div>
                 <div class="header__side--right">
-                    <button type="button" aria-label="닫기" onclick="UI.popup.close('full2')">
+                    <button type="button" aria-label="닫기" data-layer-cancel>
                         <svg><use href="#icon-close"></use></svg>
                     </button>
                 </div>
@@ -135,14 +159,14 @@
             </div>
             <div class="footer-area tp-layer">
                 <div class="button-area">
-                    <button type="button" class="btn-item btn-secondary" onclick="UI.popup.close('full2')">닫기</button>
+                    <button type="button" class="btn-item btn-secondary" data-layer-close>닫기</button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- [3] Bottom Sheet -->
-    <div id="bottom1" class="layer-field l-bottom" data-dim-close="true" role="dialog" aria-modal="true">
+    <div data-layer-id="bottom1" class="layer-field l-bottom" data-dim-close="true" role="dialog" aria-modal="true">
         <div class="layer-dim"></div>
         <div class="layer-sheet">
             <div class="layer-sheet__handle"></div>
@@ -151,7 +175,7 @@
                     <h4>약관상세보기</h4>
                 </div>
                 <div class="header__side--right">
-                    <button type="button" aria-label="닫기" onclick="UI.popup.close('bottom1')">
+                    <button type="button" aria-label="닫기" data-layer-cancel>
                         <svg><use href="#icon-close"></use></svg>
                     </button>
                 </div>
@@ -168,5 +192,73 @@
             </div>
         </div>
     </div>
+
+    <div class="layer-field l-bottom" data-layer-id="select1" data-dim-close="true" role="dialog" aria-modal="true">
+        <div class="layer-dim"></div>
+        <div class="layer-sheet">
+            <div class="layer-sheet__handle"></div>
+            <div class="header-area tp-layer">
+                <div class="header__title">
+                    <h4 id="bottom-title">통신사 선택</h4>
+                </div>
+                <div class="header__side--right">
+                    <button type="button" aria-label="닫기">
+                        <svg><use href="#icon-close"></use></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="content-area">
+                <ul class="select-list" data-select-list="select1" role="listbox" aria-label="OOO 선택항목"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // UI.popup.bind('layer_bind1');
+        UI.popup.bind('layer_bind1', {
+            before_close:async(status)=>{
+                //  확인(저장/완료) 버튼을 눌렀을 때의 유효성 검사
+                if (status === 'confirm') {
+                        await UI.dialog.alert("이름을 입력해주세요!");
+                        return false; // 창 안 닫힘
+                }
+
+                // 취소(X버튼/배경)를 눌렀을 때의 방어막 (필요할 때만)
+                if (status === 'close') {
+                    // 만약 사용자가 타이핑한 내용이 있다면?
+                    const isOk = await UI.dialog.confirm("작성 중인 내용이 날아갑니다. 정말 닫을까요?");
+                    if (!isOk) return false; // 창 안 닫힘
+                }
+
+                // 취소(X버튼/배경)를 눌렀을 때의 방어막 (필요할 때만)
+                if (status === 'cancel') {
+                    // 만약 사용자가 타이핑한 내용이 있다면?
+                    const isOk = await UI.dialog.alert("111");
+                    if (!isOk) return false; // 창 안 닫힘
+                }
+
+                // 아무 문제 없으면 무사히 통과!
+                return true;
+                // return true;
+            },
+            open_callback:()=>{console.log('레이어 열림')},
+            close_callback:()=>{console.log('레이어 닫힘')},
+            cancel_callback:()=>{console.log('레이어 x 버튼')}
+        });
+        UI.popup.bind('full1');
+        UI.popup.bind('full2');
+
+        const testOption = [
+            {value:"1", text:"1", callback:()=>{console.log("1번")}},
+            {value:"2", text:"2", callback:()=>{console.log("2번")}},
+            {value:"3", text:"3", callback:()=>{console.log("3번")}},
+            {value:"4", text:"4", callback:()=>{console.log("4번")}},
+            {value:"5", text:"5", callback:()=>{console.log("5번")}},
+        ]
+        UI.select("select1", testOption, {
+            open_callback:()=>{console.log("팝업열림")},
+            close_callback:()=>{console.log("팝업닫힘")}
+        });
+    </script>
 </body>
 </html>

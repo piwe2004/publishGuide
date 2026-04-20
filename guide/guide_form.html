@@ -6,13 +6,13 @@
     <title>UI 퍼블리싱 가이드</title>
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/layout.css">
-    <link rel="stylesheet" href="../css/compotents.css">
+    <link rel="stylesheet" href="../css/components.css">
     <link rel="stylesheet" href="./guide.css">
 
     
     <script src="../js//plugin/jquery-4.0.0.min.js"></script>
-    <script src="../js/common.js"></script>
     <script src="../js/style.js"></script>
+    <script src="../js/common.js"></script>
 
 </head>
 <body>
@@ -74,15 +74,25 @@
             <p style="font-size: 1.1rem; margin: 16px 0;">필수 INPUT</p>
             <div class="input-field" tabindex="0">
                 <div class="input-field__box tp-input">
-                    <label for="inputrequired" class="input-box__label is-required">이름</label>
+                    <p class="input-box__label is-required">이름</p>
                     <div class="input-box__inner" aria-hidden="true" required aria-required="true">
-                        <input type="text" class="input-box__item" name="inputrequired" id="inputrequired" required>
+                        <input type="hidden" name="inputrequired" id="inputrequired" required>
+                        <p class="input-box__item"></p>
+                    </div>
+                </div>
+            </div>
+
+            <p style="font-size: 1.1rem; margin-bottom: 16px; margin-top: 30px;">SELECT BOX</p>
+            <div class="input-field tp-select" tabindex="0" data-layer-btn="select1">
+                <div class="input-field__box">
+                    <label for="select1_label" class="input-box__label">통신사</label>
+                    <div class="input-box__inner" aria-hidden="true">
+                        <input type="text" name="select1_label" id="select1_label" class="input-box__item select-value" />
                     </div>
                 </div>
             </div>
 
             <p style="font-size: 1.1rem; margin-bottom: 16px; margin-top: 30px;">다중 INPUT</p>
-
             <!-- input-field모음 -->
             <div class="input-area">
                 <div class="input-field" tabindex="0">
@@ -95,20 +105,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="input-field tp-select" tabindex="0" data-select-field="select1">
-                    <div class="input-field__box">
-                        <p class="input-box__label">통신사</p>
-                        <div class="input-box__inner" aria-hidden="true">
-                            <input type="hidden" class="input-box__item select-value" />
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
 
 
-    <div id="select1" class="layer-field l-bottom is-active is-visible" data-dim-close="true" role="dialog" aria-modal="true">
+    <div class="layer-field l-bottom" data-layer-id="select1" data-dim-close="true" role="dialog" aria-modal="true">
         <div class="layer-dim"></div>
         <div class="layer-sheet">
             <div class="layer-sheet__handle"></div>
@@ -117,7 +119,7 @@
                     <h4 id="bottom-title">통신사 선택</h4>
                 </div>
                 <div class="header__side--right">
-                    <button type="button" aria-label="닫기" onclick="UI.popup.close('select1')">
+                    <button type="button" aria-label="닫기">
                         <svg><use href="#icon-close"></use></svg>
                     </button>
                 </div>
@@ -127,38 +129,18 @@
             </div>
         </div>
     </div>
-    
-    <div id="bottom-telecom" class="ui-popup popup-bottom" data-dim-close="true" role="dialog" aria-modal="true" aria-labelledby="bottom-telecom-title">
-        <div class="layer-dim" aria-hidden="true"></div>
-        <div class="popup-inner" tabindex="-1">
-            <div class="bottom-handle" aria-hidden="true"></div>
-            <div class="popup-header">
-                <h3 id="bottom-telecom-title">통신사 선택</h3>
-                <button type="button" class="btn-close" onclick="UI.popup.close('bottom-telecom')" aria-label="팝업 닫기">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px; height:24px;" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                </button>
-            </div>
-            <div class="popup-body">
-                <ul style="display: flex; flex-direction: column; gap: 10px;">
-                    <li><button type="button" class="btn btn-outline btn-block" >SKT</button></li>
-                    <li><button type="button" class="btn btn-outline btn-block">KT</button></li>
-                    <li><button type="button" class="btn btn-outline btn-block">LGU+</button></li>
-                    <li><button type="button" class="btn btn-outline btn-block">알뜰폰</button></li>
-                </ul>
-            </div>
-        </div>
-    </div>
 
     <script>
         const testOption = [
-            {value:"1", text:"1"},
-            {value:"2", text:"2"},
-            {value:"3", text:"3"},
-            {value:"4", text:"4"},
-            {value:"5", text:"5"},
+            {value:"1", text:"1", callback:()=>{console.log("1번")}},
+            {value:"2", text:"2", callback:()=>{console.log("2번")}},
+            {value:"3", text:"3", callback:()=>{console.log("3번")}},
+            {value:"4", text:"4", callback:()=>{console.log("4번")}},
+            {value:"5", text:"5", callback:()=>{console.log("5번")}},
         ]
-        UI.select("select1", testOption).then(()=>{
-            console.log("셀렉트박스 선택완료");
+        UI.select("select1", testOption, {
+            open_callback:()=>{console.log("팝업열림")},
+            close_callback:()=>{console.log("팝업닫힘")}
         });
     </script>
 </body>

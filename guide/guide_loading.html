@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>UI 퍼블리싱 가이드</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="./guide.css">
+
+    <script src="../js//plugin/jquery-4.0.0.min.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/style.js"></script>
+
+</head>
+<body>
+
+    <section id="sec-loading" class="page-section">
+        <p class="section-title">로딩 & 스켈레톤 (Loading & Skeleton)</p>
+        
+        <div style="display: flex; gap: 20px; align-items: flex-start; flex-direction: column; width:100%;">
+            <div class="content-card" style="width:100%;">
+                <h3 style="margin-bottom: 16px; font-size: 1.1rem; border-bottom: 1px solid #eee; padding-bottom: 8px;">Loading</h3>
+                <!-- 
+                    설명 :
+                    - 로딩바 호출: UI.loading.show();
+                    - 로딩바 제거: UI.loading.hide();
+                 -->
+                <button type="button" class="btn-item btn-primary" onclick="testLoading()">전체화면 로딩 테스트 (3초)</button>
+            </div>
+
+            <div class="content-card" style="width:100%;">
+                <h3 style="margin-bottom: 16px; font-size: 1.1rem; border-bottom: 1px solid #eee; padding-bottom: 8px; text-align: center;">Skeleton UI</h3>
+                
+                <!-- 
+                    설명 : 스켈레톤이 필요한 태그에 해당 클래스 추가 하면 스켈레톤 화면이 나옵니다. 스켈레톤 제거를 원할시 해당 클래스 삭제
+                    - 스켈레톤 클래스: skeleton-effect;
+                 -->
+
+                <!-- 스켈레톤 실제 구현부 -->
+                <div class="skeleton-guide-box">
+                    <div class="skeleton-effect">
+                        <div>123412342134213421341234123412</div>
+                        <div>213412342342134</div>
+                        <div>12342134</div>
+                        <div>3</div>
+                        <div>12341234234</div>
+                        <div>676666666666</div>
+                        <div>66666666666666</div>
+                        <div>6666666666</div>
+                        <div>666666666666</div>
+                        <div>
+                            <p>123412342134213421341234123412</p>
+                            <p>123412342134213421341234123412</p>
+                            <p>123412342134213421341234123412</p>
+                            <p>123412342134213421341234123412</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <button type="button" class="btn-item btn-outline" onclick="toggleSkeleton()">Shimmer 애니메이션 종료</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        // 전체화면 로딩 테스트
+        function testLoading() {
+            UI.loading.show();
+
+            // 3초 후 로딩 종료
+            setTimeout(() => {
+                 UI.loading.hide()
+            }, 3000)
+        }
+
+        // 스켈레톤 토글
+        function toggleSkeleton() {
+            const els = document.querySelector('.skeleton-guide-box').children[0];
+            els.classList.toggle("skeleton-effect");
+        }
+    </script>
+</body>
+</html>
