@@ -4,16 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>UI 퍼블리싱 가이드</title>
-    <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" href="../css/layout.css">
-    <link rel="stylesheet" href="../css/components.css">
-    <link rel="stylesheet" href="./guide.css">
+    <link rel="stylesheet" href="../assets/scss/common.css">
+    <link rel="stylesheet" href="../assets/scss/layout.css">
+    <link rel="stylesheet" href="../assets/scss/components.css">
 
     
-    <script src="../js//plugin/jquery-4.0.0.min.js"></script>
-    <script src="../js/style.js"></script>
-    <script src="../js/common.js"></script>
+    <script src="../assets/js//plugin/jquery-4.0.0.min.js"></script>
+    <script src="../assets/js/style.js"></script>
+    <script src="../assets/js/common.js"></script>
 
+    <!-- 가이드 페이지 전용 css -->
+    <link rel="stylesheet" href="./guide.css" />
 </head>
 <body>
 
@@ -41,20 +42,22 @@
         <div class="content-card">
             <p style="font-size: 1.1rem; margin-bottom: 16px;">BASIC INPUT</p>
             <div class="input-field" tabindex="0">
-                <div class="input-field__box tp-input">
+                <div class="input-box tp-input">
                     <label for="input1" class="input-box__label">이름</label>
                     <div class="input-box__inner" aria-hidden="true">
                         <input type="text" class="input-box__item" name="input1" id="input1" required>
+                        <button type="button" class="input-box__clear" aria-label="입력내용 지우기"></button>
                     </div>
                 </div>
             </div>
 
             <p style="font-size: 1.1rem; margin: 16px 0;">INFO INPUT</p>
             <div class="input-field" tabindex="0">
-                <div class="input-field__box tp-input">
+                <div class="input-box tp-input">
                     <label for="input2" class="input-box__label">이름</label>
                     <div class="input-box__inner" aria-hidden="true">
                         <input type="text" class="input-box__item" name="input2" id="input2" required>
+                        <button type="button" class="input-box__clear" aria-label="입력내용 지우기"></button>
                     </div>
                 </div>
                 <p class="input-field__text">비밀번호는 대문자 소문자 특수문자....</p>
@@ -62,10 +65,11 @@
 
             <p style="font-size: 1.1rem; margin: 16px 0;">ERROR INPUT</p>
             <div class="input-field is-error" tabindex="0">
-                <div class="input-field__box tp-input">
+                <div class="input-box tp-input">
                     <label for="input3" class="input-box__label">이름</label>
                     <div class="input-box__inner" aria-hidden="true">
                         <input type="text" class="input-box__item" name="input3" id="input3" required>
+                        <button type="button" class="input-box__clear" aria-label="입력내용 지우기"></button>
                     </div>
                 </div>
                 <p class="input-field__text">테스트 테스트</p>
@@ -73,18 +77,18 @@
 
             <p style="font-size: 1.1rem; margin: 16px 0;">필수 INPUT</p>
             <div class="input-field" tabindex="0">
-                <div class="input-field__box tp-input">
-                    <p class="input-box__label is-required">이름</p>
+                <div class="input-box tp-input">
+                    <label for="inputrequired" class="input-box__label is-required">이름</label>
                     <div class="input-box__inner" aria-hidden="true" required aria-required="true">
-                        <input type="hidden" name="inputrequired" id="inputrequired" required>
-                        <p class="input-box__item"></p>
+                        <input type="text" class="input-box__item" name="inputrequired" id="inputrequired" required>
+                        <button type="button" class="input-box__clear" aria-label="입력내용 지우기"></button>
                     </div>
                 </div>
             </div>
 
             <p style="font-size: 1.1rem; margin-bottom: 16px; margin-top: 30px;">SELECT BOX</p>
-            <div class="input-field tp-select" tabindex="0" data-layer-btn="select1">
-                <div class="input-field__box">
+            <div class="input-field tp-select" data-layer-btn="select1">
+                <div class="input-box">
                     <label for="select1_label" class="input-box__label">통신사</label>
                     <div class="input-box__inner" aria-hidden="true">
                         <input type="text" name="select1_label" id="select1_label" class="input-box__item select-value" />
@@ -96,7 +100,7 @@
             <!-- input-field모음 -->
             <div class="input-area">
                 <div class="input-field" tabindex="0">
-                    <div class="input-field__box tp-input">
+                    <div class="input-box tp-input">
                         <label for="input4" class="input-box__label">주민등록번호</label>
                         <div class="input-box__inner" aria-hidden="true">
                             <input type="text" class="input-box__item user-number" inputmode="numeric" pattern="[0-9]*" maxlength="6" name="input4" id="input4" required>
@@ -116,11 +120,11 @@
             <div class="layer-sheet__handle"></div>
             <div class="header-area tp-layer">
                 <div class="header__title">
-                    <h4 id="bottom-title">통신사 선택</h4>
+                    <h2 id="bottom-title">통신사 선택</h2>
                 </div>
                 <div class="header__side--right">
                     <button type="button" aria-label="닫기">
-                        <svg><use href="#icon-close"></use></svg>
+                        <img src="../assets/images/icon_close_b.svg" alt="">
                     </button>
                 </div>
             </div>

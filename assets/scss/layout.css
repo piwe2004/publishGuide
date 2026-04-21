@@ -1,0 +1,147 @@
+@charset "UTF-8";
+/* ============================================================
+    1. Colors (BS PASS Design Guide)
+============================================================ */
+/* ============================================================
+    2. Typography (Placeholder 활용)
+============================================================ */
+.header-area .header__title h2 {
+  font-family: "BNKGothic", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+/* ============================================================
+   rem 기반 타이포그래피 (%)
+   ============================================================ */
+/* ==========================================================================
+   1. 유연한 Flexbox 믹스인
+   - 사용법: @include flex(가로정렬, 세로정렬, 방향, 랩핑);
+   - 기본값은 중앙 정렬(center)과 가로 방향(row)으로 세팅되어 있습니다.
+   ========================================================================== */
+/* (옵션) 자주 쓰는 레이아웃은 아예 숏컷 믹스인으로 빼두면 더 편합니다 */
+/* ==========================================================================
+   2. 말줄임표 (멀티 라인 대응)
+   - utilities에서는 클래스로 썼지만, 특정 컴포넌트 안에서만 쓰고 싶을 때
+   ========================================================================== */
+/* ==========================================================================
+   3. 모바일 스크롤바 숨기기 (리스트나 가로 스와이프 영역에 필수)
+   - 기능은 작동하되, 지저분한 스크롤바 디자인만 없앱니다.
+   ========================================================================== */
+/* ==========================================================================
+   4. 가상 요소(Pseudo-element) 초기화 숏컷
+   - ::before, ::after 쓸 때 매번 적기 귀찮은 속성들을 한 번에 세팅
+   ========================================================================== */
+/* ==========================================================================
+   5. 터치 영역 확장 (접근성)
+   - 눈에 보이는 버튼 크기는 작아도, 실제 터치되는 영역을 44px 이상으로 넓혀줌
+   ========================================================================== */
+/* 기본 레이아웃 */
+.body-field > div {
+  width: 100%;
+}
+.body-field.main {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.header-area {
+  width: 100%;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.25rem;
+  box-sizing: border-box;
+}
+.header-area .header__title:only-child {
+  width: 100%;
+  text-align: center;
+}
+.header-area.header-rounded {
+  border-radius: 12px 12px 0 0;
+}
+.header-area [class^=header__side] {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0 10px;
+}
+.header-area [class^=header__side] > button {
+  width: 24px;
+  height: 24px;
+}
+.header-area .btn-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  padding: 0 4px;
+}
+
+.content-area {
+  flex: 1;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+.footer-area {
+  padding: 10px;
+  box-sizing: border-box;
+}
+.input-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 15px 0;
+}
+.input-area > div {
+  width: 100%;
+}
+
+.button-area {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0 10px;
+}
+.button-area .btn-item {
+  flex: 1;
+}
+.button-area.tp-2 > .btn-item:first-child {
+  flex: 20% 0;
+}
+.button-area.tp-3 > .btn-item:first-child {
+  flex: 30% 0;
+}
+.button-area.tp-4 > .btn-item:first-child {
+  flex: 40% 0;
+}
+.button-area.tp-6 > .btn-item:first-child {
+  flex: 60% 0;
+}
+.button-area.tp-7 > .btn-item:first-child {
+  flex: 70% 0;
+}
+.button-area.tp-8 > .btn-item:first-child {
+  flex: 80% 0;
+}
+
+.agree-field {
+  display: flex;
+  flex-direction: column;
+  gap: 20px 0;
+}
+.agree-field .agree-field__list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px 0;
+}

@@ -5,21 +5,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>회원가입</title>
 
-        <link rel="stylesheet" href="../css/layout.css" />
-        <link rel="stylesheet" href="../css/style.css" />
+        <link rel="stylesheet" href="../assets/scss/layout.css" />
+        <link rel="stylesheet" href="../assets/scss/style.css" />
 
-        <script src="../js/plugin/jquery-4.0.0.min.js"></script>
-        <script src="../js/common.js"></script>
-        <script src="../js/style.js"></script>
+        <script src="../assets/js/plugin/jquery-4.0.0.min.js"></script>
+        <script src="../assets/js/common.js"></script>
+        <script src="../assets/js/style.js"></script>
     </head>
     <body>
         <div class="body-field main">
             <div class="header-area">
                 <div class="header__side--left">
-                <button type="button" aria-label="뒤로가기">back</button>
+                <button type="button" aria-label="뒤로가기">
+                    <img src="../assets/images/icon_back_b.svg" alt="">
+                </button>
                 </div>
                 <div class="header__title">
-                <h4>회원가입</h4>
+                <h2>회원가입</h2>
                 </div>
                 <div class="header__side--right"></div>
             </div>
@@ -33,13 +35,13 @@
                         </div>
                     </div>
                     <div class="input-area">
-                        <div class="input-field__box tp-input">
+                        <div class="input-box tp-input">
                             <label for="input1" class="input-box__label">이름</label>
                             <div class="input-box__inner" aria-hidden="true">
                                 <input type="text" class="input-box__item" name="input1" id="input1" required>
                             </div>
                         </div>
-                        <div class="input-field__box tp-input">
+                        <div class="input-box tp-input">
                             <label for="input2" class="input-box__label">주민등록번호</label>
                             <div class="input-box__inner" aria-hidden="true">
                                 <input type="text" class="input-box__item user-number" inputmode="numeric" pattern="[0-9]*" maxlength="6" name="input2" id="input2" required>
@@ -47,7 +49,7 @@
                                 <input type="text" class="input-box__item user-number" inputmode="numeric" pattern="[0-9]*" maxlength="7" name="input3" id="input3" required>
                             </div>
                         </div>
-                        <div class="input-field__box tp-select">
+                        <div class="input-box tp-select">
                             <p class="input-box__label">통신사</p>
                             <div class="input-box__inner" aria-hidden="true">
                                 <p class="input-box__item" data-select="select1"></p>
@@ -78,10 +80,12 @@
             <div class="layer-sheet l-bottom select-layer" data-layerId="selectSheet1">
                 <div class="header-area">
                     <div class="header__title">
-                        <h4>약관상세보기</h4>
+                        <h2>약관상세보기</h2>
                     </div>
                     <div class="header__side--right">
-                        <button type="button" class="layer-sheet__close" aria-label="닫기">닫기</button>
+                        <button type="button" class="layer-sheet__close" aria-label="닫기">
+                            <img src="../assets/images/icon_close_b.svg" alt="">
+                        </button>
                     </div>
                 </div>
                 <div class="content-area">

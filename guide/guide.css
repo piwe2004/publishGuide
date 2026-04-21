@@ -1,4 +1,3 @@
-@charset "UTF-8";
 :root {
   --primary-color: #3b82f6;
   --primary-hover: #2563eb;
@@ -135,5 +134,17 @@
   padding: 20px;
 }
 
-/* 헤더 목업 (UI 박스) */
-/* 스켈레톤 가이드 (이미지 2의 구조 재현) */
+.preview-box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.preview-box iframe {
+  width: 100%;
+  max-width: 375px;
+  height: 100%;
+  height: 667px;
+  border: 1px solid #000;
+}

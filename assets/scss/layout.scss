@@ -1,0 +1,136 @@
+@charset "utf-8";
+@use "variable" as *;
+@use "_mixins" as *;
+
+/* 기본 레이아웃 */
+
+.body-field{
+    & > div{
+        width:100%;
+    }
+    &.main{
+        width:100%;
+        height:100vh;
+        position: relative;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap:10px;
+    }
+}
+.header-area{
+    width:100%;
+    height:56px;
+    @include flex(center, space-between);
+    padding:0 rem(20);
+    box-sizing: border-box;
+    & .header__title:only-child{
+        width:100%;
+        text-align: center;
+    }
+    &.header-rounded{
+        border-radius: 12px 12px 0 0;
+    }
+    & [class^="header__side"]{
+        height:100%;
+        @include flex(center, center);
+        gap:0 10px;
+        > button{
+            width:24px;
+            height:24px;
+        }
+    }
+    .header__title{
+        h2{
+            @extend %head-typo-20;
+        }
+    }
+    // 텍스트 형태로 된 버튼 (예: '로그아웃')
+    .btn-text {
+        font-size: 14px;
+        font-weight: 500;
+        color: #666;
+        padding: 0 4px; // 텍스트 버튼은 좌우 여백을 약간 줌
+    }
+}
+
+.content-area{
+    flex:1;
+    padding:10px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    &.main{
+    }
+}
+
+.footer-area{
+    padding:10px;
+    box-sizing: border-box;
+    &.main{
+    }
+}
+
+.input-area{
+    @include flex();
+    flex-direction: column;
+    gap:15px 0;
+    > div{
+        width: 100%;
+    }
+}
+
+.button-area{
+    @include flex(center, space-between);
+    gap:0 10px;
+    .btn-item{
+        flex:1;
+    }
+
+    &[class*="tp-"]{
+    }
+
+    &.tp{
+        &-2{
+            > .btn-item:first-child{
+                flex:20% 0;
+            }
+        }
+        &-3{
+            > .btn-item:first-child{
+                flex:30% 0
+            }
+        }
+        &-4{
+            > .btn-item:first-child{
+                flex:40% 0
+            }
+        }
+        &-6{
+            > .btn-item:first-child{
+                flex:60% 0;
+            }
+        }
+        &-7{
+            > .btn-item:first-child{
+                flex:70% 0;
+            }
+        }
+        &-8{
+            > .btn-item:first-child{
+                flex:80% 0;
+            }
+        }
+    }
+}
+
+.agree-field{
+    display: flex;
+    flex-direction: column;
+    gap:20px 0;
+    & &__list{
+        @include flex(center, center);
+        flex-direction:column;
+        gap:10px 0;
+    }
+}
+
