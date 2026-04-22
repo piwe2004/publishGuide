@@ -14,6 +14,12 @@
 /* ============================================================
    rem 기반 타이포그래피 (%)
    ============================================================ */
+.box-column__title {
+  font-size: 1.25rem;
+  line-height: 2rem;
+  font-weight: 700;
+}
+
 /* ==========================================================================
    1. 유연한 Flexbox 믹스인
    - 사용법: @include flex(가로정렬, 세로정렬, 방향, 랩핑);
@@ -144,4 +150,22 @@
   justify-content: center;
   flex-direction: column;
   gap: 10px 0;
+}
+
+.box-column {
+  height: 100%;
+  padding-top: 3.125rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 3.125rem 0;
+  text-align: center;
+}
+.box-column__logo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #222222;
+  overflow: hidden;
 }

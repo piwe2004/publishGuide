@@ -46,12 +46,11 @@ html {
 body {
   /* vh 대신 최신 dvh 단위 사용 (iOS 동적 툴바 영역 무시 버그 해결) */
   min-height: 100dvh;
-
   /* iOS 당겨서 새로고침(Pull-to-refresh) 및 상하 바운스 효과 완벽 차단 */
   overscroll-behavior-y: none;
-
   /* 모바일 터치 시 생기는 파란색/회색 하이라이트 박스 제거 */
   -webkit-tap-highlight-color: transparent;
+  background-color:$gray-10;
 }
 
 /* ==========================================================================
@@ -203,91 +202,64 @@ button path {
 /* ==========================================================================
    1. Spacing (Margin, Padding, Gap)
    - 0부터 50까지는 5px 단위, 그 이후는 필요에 따라 추가
-   ========================================================================== */
-@for $i from 0 through 10 {
-  $val: $i * 5; // 0, 5, 10, 15, 20 ... 50
+========================================================================== */
+$spacing-values: 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, auto;
 
-  // Margin
-  .m-#{$val} {
-    margin: #{$val}px !important;
-  }
+$utility-map: (
+  "m": (margin),
+  "mt": (margin-top),
+  "mb": (margin-bottom),
+  "ml": (margin-left),
+  "mr": (margin-right),
+  "mx": (margin-left, margin-right),
+  "my": (margin-top, margin-bottom),
+  "p": (padding),
+  "pt": (padding-top),
+  "pb": (padding-bottom),
+  "pl": (padding-left),
+  "pr": (padding-right),
+  "px": (padding-left, padding-right),
+  "py": (padding-top, padding-bottom),
+  "gap": (gap)
+);
 
-  .mt-#{$val} {
-    margin-top: #{$val}px !important;
-  }
-
-  .mb-#{$val} {
-    margin-bottom: #{$val}px !important;
-  }
-
-  .ml-#{$val} {
-    margin-left: #{$val}px !important;
-  }
-
-  .mr-#{$val} {
-    margin-right: #{$val}px !important;
-  }
-
-  .mx-#{$val} {
-    margin-left: #{$val}px !important;
-    margin-right: #{$val}px !important;
-  }
-
-  .my-#{$val} {
-    margin-top: #{$val}px !important;
-    margin-bottom: #{$val}px !important;
-  }
-
-  // Padding
-  .p-#{$val} {
-    padding: #{$val}px !important;
-  }
-
-  .pt-#{$val} {
-    padding-top: #{$val}px !important;
-  }
-
-  .pb-#{$val} {
-    padding-bottom: #{$val}px !important;
-  }
-
-  .pl-#{$val} {
-    padding-left: #{$val}px !important;
-  }
-
-  .pr-#{$val} {
-    padding-right: #{$val}px !important;
-  }
-
-  .px-#{$val} {
-    padding-left: #{$val}px !important;
-    padding-right: #{$val}px !important;
-  }
-
-  .py-#{$val} {
-    padding-top: #{$val}px !important;
-    padding-bottom: #{$val}px !important;
-  }
-
-  // Gap (Flex/Grid에서 간격 띄울 때 필수)
-  .gap-#{$val} {
-    gap: #{$val}px !important;
+@each $prefix, $props in $utility-map {
+  @each $val in $spacing-values {
+    
+    // 조건문: 값이 'auto'인 경우, 접두사가 'm'(margin)으로 시작할 때만 생성
+    // (padding-auto나 gap-auto는 없기 때문)
+    @if $val != auto or str-index($prefix, "m") == 1 {
+      
+      .#{$prefix}-#{$val} {
+        @each $prop in $props {
+          // 값이 auto면 px을 붙이지 않고, 숫자면 px을 붙임
+          #{$prop}: if($val == auto, auto, #{$val}px) !important;
+        }
+      }
+    }
+    
   }
 }
-
 /* ==========================================================================
    2. Sizing (Width, Height)
    - 모바일에서 자주 쓰는 %와 vh/vw 위주
    ========================================================================== */
 $sizes: 25, 50, 75, 100;
 
-@each $size in $sizes {
-  .w-#{$size} {
-    width: math.percentage(math.div($size, 100)) !important;
-  }
+// 1. 접두사와 실제 속성을 매핑
+$dimension-map: (
+  "w": width,
+  "h": height
+);
 
-  .h-#{$size} {
-    height: math.percentage(math.div($size, 100)) !important;
+// 2. 속성별로 먼저 순회 (w 다 나오고 나서 h 나옴)
+@each $prefix, $prop in $dimension-map {
+  
+  // 3. 값별로 순회
+  @each $size in $sizes {
+    .#{$prefix}-#{$size} {
+      #{$prop}: math.percentage(math.div($size, 100)) !important;
+    }
   }
 }
 

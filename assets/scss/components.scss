@@ -684,56 +684,76 @@
 }
 
 
-// 인증번호
-.otp-feild{
-    $otp:otp-;
-    @include flex(center, center);
-    flex-direction: column;
-    gap:5rem 0;
-    & .#{$otp}top{
+// 정보 박스
+.info-item__{
+    $info-item:info-item__;
+    &list{
         width: 100%;
-        @include flex(center, space-between);
-        &__count{
-            @include flex(center, space-between);
-            gap:0 10px;
+        border-radius:rem(8);
+        background-color:$gray-08;
+        padding:rem(20);
+        &.ty-outline{
+            border:1px solid $gray-08;
+            background-color:$gray-10;
+        }
+        &.ty-none{
+            background-color:$gray-10;
         }
     }
-    & .#{$otp}password__text{
-        margin:rem(50) 0 rem(20);
-        text-align: center;
+    &row{
+        width: 100%;
+        @include flex(center, space-between);
+            &.tp-otp{
+            .#{$info-item}content{
+                flex-direction:row;
+                gap:0 rem(5);
+            }
+        }
     }
-    & .#{$otp}input__{
-        $input:#{$otp}input__;
-        &inner{
-            width:100%;
-            & .#{$input}box{
-                @include flex(center, center);
-                gap:0 2%;
-                & .#{$input}item{
-                    flex:1;
-                    min-width:rem(50);
-                    max-width:rem(100);
-                    min-height:rem(80);
-                    padding:rem(10) rem(5);
-                    border-radius:rem(7);
-                    border:1px solid $gray-06;
-                    background-color:$gray-09;
-                    text-align: center;
-                    &:focus{
-                        background-color:$gray-10;
-                    }
-                }
-            }
-            & .#{$input}text{
-                text-align: center;
-                margin-top:rem(20);
-                &.is-error{
-                    color:$color-error-01;
-                }
-                &.is-complete{
-                    color:$color-success-01;
-                }
-            }
+    &label{
+        @extend %typo-b-16;
+    }
+    &content{
+        @include flex(flex-end, center);
+        flex-direction: column;
+        > strong{
+            @extend %typo-sb-16;
+        }
+        > span{
+        }
+
+    }
+}
+
+// 인증번호
+.otp-input__{
+    &inner{
+        width:100%;
+        @include flex(center, center);
+        gap:0 2%;
+    }
+    &item{
+        width: 100%;
+        min-width:rem(50);
+        max-width:rem(100);
+        aspect-ratio: 1 / 1;
+        padding:rem(10) rem(5);
+        border-radius:rem(7);
+        border:1px solid $gray-06;
+        background-color:$gray-09;
+        text-align: center;
+        &:focus{
+            background-color:$gray-10;
+        }
+    }
+    &text{
+        text-align: center;
+        margin-top:rem(20);
+        &.is-error{
+            color:$color-error-01;
+        }
+        &.is-complete{
+            color:$color-success-01;
         }
     }
 }
@@ -867,27 +887,8 @@
     }
 }
 
-.box-column{
-    $box-column:box-column;
-
-    @include flex(center, center);
-    flex-direction: column;
-    gap:rem(50) 0;
-    text-align: center;
-    &__logo{
-        width:120px;
-        height:120px;
-        border-radius:50%;
-        background-color:$gray-02;
-        overflow:hidden;
-    }
-    &__title{
-        @extend %typo-b-20;
-    }
-}
 
 // QR버튼
-
 .qr-button{
     width:202px;
     height:56px;
@@ -930,6 +931,17 @@
         border-color:$color-temporary;
         > span:before{
             background:url(../images/icon_qr_4.svg);
+        }
+    }
+}
+
+.login-pass{
+    border-radius: rem(20);
+    background-color:$gray-08;
+    padding: rem(20);
+    .otp-input__box{
+        .otp-input__item{
+
         }
     }
 }

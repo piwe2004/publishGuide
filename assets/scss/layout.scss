@@ -134,3 +134,22 @@
     }
 }
 
+.box-column{
+    $box-column:box-column;
+    height:100%;
+    padding-top:rem(50);
+    @include flex(center, flex-start);
+    flex-direction: column;
+    gap:rem(50) 0;
+    text-align: center;
+    &__logo{
+        width:120px;
+        height:120px;
+        border-radius:50%;
+        background-color:$gray-02;
+        overflow:hidden;
+    }
+    &__title{
+        @extend %typo-b-20;
+    }
+}

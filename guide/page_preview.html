@@ -5,34 +5,143 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>UI 퍼블리싱 가이드</title>
     <link rel="stylesheet" href="../assets/scss/common.css">
-    <link rel="stylesheet" href="../assets/scss/layout.css">
     <link rel="stylesheet" href="../assets/scss/components.css">
+    
+        <!-- 가이드 페이지를 위한 css -->
     <link rel="stylesheet" href="./guide.css">
-
-    <script src="../assets/js//plugin/jquery-4.0.0.min.js"></script>
-    <script src="../assets/js/common.js"></script>
-    <script src="../assets/js/style.js"></script>
+    
+    <style>
+        td, th{
+            height:50px;
+            border:1px solid #000;
+            padding:10px;
+        }
+        .ifram-box{
+            position: absolute;
+            top:50%;
+            left:50%;
+            transform: translate(-50%, -50%);
+            border:1px solid #000;
+            display: none;
+        }
+        .ifram-box.show{
+            display: block;
+        }
+        .ifram-top{
+            padding:10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        #guide-frame{
+            width:375px;
+            height:750px;
+        }
+    </style>
 
 </head>
 <body>
     <section id="sec-buttons" class="page-section">
         <h2 class="section-title">페이지 미리보기</h2>
-        <div class="content-card">
-            <div class="preview-field">
-                <div class="preview_menu">
-                    <nav>
-                        <button data-pre-menu="agree1"></button>
-                    </nav>
-                </div>
-                <!-- <div class="preview-tab">
-                    <button>모바일</button>
-                    <button>탭</button>
-                </div> -->
-                <div class="preview-box">
-                    <iframe src="./page_agree1.html" frameborder="0"></iframe>
-                </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>페이지명</th>
+                    <th>주소</th>
+                    <th>미리보기</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>회원가입-약관동의</td>
+                    <td><a href="./page_agree1.html" target="_blank">/guide/page_agree1</a></td>
+                    <td><button type="button" class="nav-btn is-active" data-target="page_agree1">미리보기</button></td>
+                </tr>
+                <tr>
+                    <td>회원가입-본인인증</td>
+                    <td><a href="./page_agree2.html" target="_blank">/guide/page_agree2</a></td>
+                    <td><button type="button" class="nav-btn is-active" data-target="page_agree2">미리보기</button></td>
+                </tr>
+                <tr>
+                    <td>회원가입-인증번호</td>
+                    <td><a href="./page_agree3.html" target="_blank">/guide/page_agree3</a></td>
+                    <td><button type="button" class="nav-btn is-active" data-target="page_agree3">미리보기</button></td>
+                </tr>
+                <tr>
+                    <td>사용자확인-카드</td>
+                    <td><a href="./page_verify.html" target="_blank">/guide/page_verify</a></td>
+                    <td><button type="button" class="nav-btn is-active" data-target="page_verify">미리보기</button></td>
+                </tr>
+                <tr>
+                    <td>사용자확인-문구, 이용안내</td>
+                    <td><a href="./page_verify2.html" target="_blank">/guide/page_verify2</a></td>
+                    <td><button type="button" class="nav-btn is-active" data-target="page_verify2">미리보기</button></td>
+                </tr>
+                <tr>
+                    <td>간편비밀번호</td>
+                    <td><a href="./page_password.html" target="_blank">/guide/page_password</a></td>
+                    <td><button type="button" class="nav-btn is-active" data-target="page_password">미리보기</button></td>
+                </tr>
+                <tr>
+                    <td>가입완료</td>
+                    <td><a href="./page_accession.html" target="_blank">/guide/page_accession</a></td>
+                    <td><button type="button" class="nav-btn is-active" data-target="page_accession">미리보기</button></td>
+                </tr>
+                <tr>
+                    <td>가입완료</td>
+                    <td><a href="./page_login1.html" target="_blank">/guide/page_login1</a></td>
+                    <td><button type="button" class="nav-btn is-active" data-target="page_login1">미리보기</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- Main Content -->
+        <div class="ifram-box">
+            <div class="ifram-top">
+                <p>미리보기</p>
+                <button id="iframClose">닫기</button>
             </div>
+            <iframe id="guide-frame" src="" ></iframe>
         </div>
     </section>
+    <script>
+        
+        document.querySelector("#iframClose").addEventListener("click", function(){
+            document.querySelector(".ifram-box").classList.remove("show");
+        });
+
+        const navBtn = document.querySelectorAll(".nav-btn");
+        const frame = document.getElementById('guide-frame');
+        let nevTarget = "";
+
+        navBtn.forEach(x=>{
+            x.addEventListener("click", function(e){
+                navBtn.forEach(a=>a.classList.remove("is-active"));
+                nevTarget = e.currentTarget.dataset.target;
+                frame.setAttribute("src", `./${nevTarget}.html`);
+                e.currentTarget.classList.add("is-active");
+
+                document.querySelector(".ifram-box").classList.add("show");
+            });
+        })
+
+        // iframe의 내용이 다 로드된 후 실행
+        frame.onload = function() {
+            try {
+                // 1. iframe 내부의 document 객체 접근
+                const frameDoc = frame.contentDocument || frame.contentWindow.document;
+
+                // 2. sub.html에서 원하는 태그 선택 (예: #target)
+                const targetTag = frameDoc.getElementById('target');
+
+                if (targetTag) {
+                    // 3. 태그 복사해서 메인 페이지에 넣기
+                    const clone = targetTag.cloneNode(true);
+                    document.getElementById('display-area').appendChild(clone);
+                }
+            } catch (e) {
+                console.error("로컬 보안 정책으로 인해 접근이 차단되었을 수 있습니다.", e);
+            }
+        };
+    </script>
 </body>
 </html>
