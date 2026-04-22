@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>UI 퍼블리싱 가이드</title>
+    <link rel="stylesheet" href="../assets/scss/common.css">
+    <link rel="stylesheet" href="../assets/scss/components.css">
+
+    <!-- 가이드 페이지를 위한 css -->
+    <link rel="stylesheet" href="./guide.css">
+    
+    <style>
+        #guide-frame{
+            width: 100%;
+            height:100%;
+            border:none;
+            display: block;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>UI/UX가이드</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><button type="button" class="nav-btn is-active" data-target="guide_header">헤더 (Headers)</button></li>
+                <li><button type="button" class="nav-btn" data-target="guide_button">버튼 (Buttons)</button></li>
+                <li><button type="button" class="nav-btn" data-target="guide_form">폼 요소 (Forms)</button></li>
+                <li><button type="button" class="nav-btn" data-target="guide_layer">레이어 & 팝업</button></li>
+                <li><button type="button" class="nav-btn" data-target="guide_dialogs">다이얼로그 (Dialogs)</button></li>
+                <li><button type="button" class="nav-btn" data-target="guide_toast">토스트 (Toast)</button></li>
+                <li><button type="button" class="nav-btn" data-target="guide_loading">로딩 & 스켈레톤</button></li>
+                <li><button type="button" class="nav-btn" data-target="guide_card">카드 & QR</button></li>
+                <li><button type="button" class="nav-btn" data-target="page_preview">페이지 미리보기</button></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <iframe id="guide-frame" src="./guide_header.html" ></iframe>
+        </main>
+    </div>
+
+    <script>
+        const navBtn = document.querySelectorAll(".nav-btn");
+        const frame = document.getElementById('guide-frame');
+
+        // --- 1. 공통 페이지 로드 함수 ---
+        function loadTargetPage(targetName, btnElement) {
+            if (!targetName) return;
+
+            // 모든 버튼에서 활성 클래스 제거 및 클릭한 버튼에 추가
+            navBtn.forEach(a => a.classList.remove("is-active"));
+            if (btnElement) {
+                btnElement.classList.add("is-active");
+            } else {
+                // 새로고침 시 파라미터와 일치하는 버튼 찾아서 활성화
+                const targetBtn = document.querySelector(`.nav-btn[data-target="${targetName}"]`);
+                if (targetBtn) targetBtn.classList.add("is-active");
+            }
+
+            // iframe 주소 변경
+            frame.setAttribute("src", `./${targetName}.html`);
+
+            // URL 파라미터 업데이트 (페이지 새로고침 없이 주소만 변경)
+            const url = new URL(window.location);
+            url.searchParams.set('page', targetName);
+            window.history.pushState({}, '', url);
+        }
+
+        // --- 2. 버튼 클릭 이벤트 설정 ---
+        navBtn.forEach(x => {
+            x.addEventListener("click", function(e) {
+                const target = e.currentTarget.dataset.target;
+                loadTargetPage(target, e.currentTarget);
+            });
+        });
+
+        // --- 3. 초기 로드 시 파라미터 체크 ---
+        window.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const pageParam = params.get('page');
+
+            if (pageParam) {
+                // URL에 파라미터가 있으면 해당 페이지 로드
+                loadTargetPage(pageParam);
+            } else {
+                // 파라미터가 없으면 기본값(예: guide_header) 로드
+                // HTML상에서 기본 src가 guide_layer.html로 되어있으므로 맞춰주셔도 됩니다.
+                const defaultPage = "guide_header"; 
+                loadTargetPage(defaultPage);
+            }
+        });
+
+        // --- 4. iframe 로드 후 로직 (기존 유지) ---
+        frame.onload = function() {
+            try {
+                const frameDoc = frame.contentDocument || frame.contentWindow.document;
+                const targetTag = frameDoc.getElementById('target');
+
+                if (targetTag) {
+                    const clone = targetTag.cloneNode(true);
+                    const displayArea = document.getElementById('display-area');
+                    if (displayArea) {
+                        displayArea.innerHTML = ''; // 기존 내용 삭제 후 추가
+                        displayArea.appendChild(clone);
+                    }
+                }
+            } catch (e) {
+                console.warn("Cross-origin 정책으로 인해 내부 복사가 제한될 수 있습니다.");
+            }
+        };
+    </script>
+</body>
+</html>

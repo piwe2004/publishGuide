@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>회원가입</title>
+    <link rel="stylesheet" href="../assets/scss/common.css" />
+    <link rel="stylesheet" href="../assets/scss/layout.css" />
+    <link rel="stylesheet" href="../assets/scss/components.css" />
+    
+    <script src="../assets/js/plugin/jquery-4.0.0.min.js"></script>
+    <script src="../assets/js/common.js"></script>
+    <script src="../assets/js/style.js"></script>
+
+
+    <!-- 가이드 페이지 전용 css -->
+    <link rel="stylesheet" href="./guide.css" />
+    </head>
+    <body>
+        <form action="">
+            <div class="body-field main">
+                <div class="header-area">
+                    <div class="header__side--left">
+                    <button type="button" aria-label="뒤로가기">
+                        <img src="../assets/images/icon_back_b.svg" alt="">
+                    </button>
+                    </div>
+                    <div class="header__title">
+                    <h2>사용자 확인</h2>
+                    </div>
+                    <div class="header__side--right"></div>
+                </div>
+                <div class="content-area main">
+                    <div class="box-column">
+                        <div class="box-column__logo"></div>
+                        <p class="box-column__title">가입정보를 찾을수가 없어요</p>
+                        <p class="box-column__text">
+                            입력하신 정보로 가입된 내역을<br/>찾을 수 없습니다.<br/><br/>
+                            가입여부 확인이 필요할 경우<br/>문의전화를 통해 확인해주세요
+                        </p>
+                    </div>
+                </div>
+                <div class="footer-area main">
+                    <div class="button-area tp-3">
+                        <button type="button" onclick="testConfirm()" class="btn-item btn-secondary btn-block">종료</button>
+                        <button type="button" class="btn-item btn-primary btn-block">문의하기</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+        <script>
+            async function testConfirm() {
+                const isOk = await UI.dialog.confirm('모바일 출입증 서비스를<br/>종료하시겠습니까?', "test1", "종료하기");
+                console.log(isOk ? "종료하기" : "취소");
+            }
+        </script>
+
+    </body>
+</html>

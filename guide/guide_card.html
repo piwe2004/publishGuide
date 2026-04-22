@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>UI 퍼블리싱 가이드</title>
+    <link rel="stylesheet" href="../assets/scss/common.css">
+    <link rel="stylesheet" href="../assets/scss/layout.css">
+    <link rel="stylesheet" href="../assets/scss/components.css">
+
+    <script src="../assets/js//plugin/jquery-4.0.0.min.js"></script>
+    <script src="../assets/js/common.js"></script>
+    <script src="../assets/js/style.js"></script>
+
+    <!-- 가이드 페이지 전용 css -->
+    <link rel="stylesheet" href="./guide.css" />
+
+    <style>
+        .card-guides{
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            gap:40px;
+        }
+        .user-card{
+            margin:0;
+        }
+    </style>
+</head>
+<body>
+
+    <section id="sec-buttons" class="page-section">
+        <h2 class="section-title">출입카드와 QR</h2>
+        <div style="display: flex; gap: 20px; align-items: flex-start; flex-direction: column; width:100%;">
+            <div class="content-card" style="width:100%;">
+                <h3 style="margin-bottom: 16px; font-size: 1.1rem; border-bottom: 1px solid #eee; padding-bottom: 8px;">Card</h3>
+                <div class="card-guides"> <!-- 가이드 전용 div 실무 사용X -->
+
+                    <div class="user-card tp-full">
+                        <div class="user-card__company">
+                            <img src="../assets/images/bnkLogo_01.svg" alt="bnk부산은행">
+                        </div>
+                        <div class="user-card__picture">
+                            <img src="" alt="">
+                        </div>
+                        <div class="user-card__info">
+                            <p class="card-info__name">김부산</p>
+                            <p class="card-info__dept">
+                                디지털전략부
+                                <span class="card-info__rank">과장</span>
+                            </p>
+                        </div>
+                        <div class="user-card__footer">
+                            <p class="user-card__text">위 사람은 당사 직원임을 증명함</p>
+                            <img src="../assets/images/icon_seal.svg" alt="부산은행장직인">
+                        </div>
+                    </div>
+                    <div class="user-card tp-group">
+                        <div class="user-card__company">
+                            <img src="../assets/images/bnkLogo_02.svg" alt="bnk경남은행">
+                        </div>
+                        <div class="user-card__picture">
+                            <img src="" alt="">
+                        </div>
+                        <div class="user-card__info">
+                            <p class="card-info__name">김계열</p>
+                            <p class="card-info__dept">
+                                디지털전략부
+                                <span class="card-info__rank">과장</span>
+                            </p>
+                        </div>
+                        <div class="user-card__date">
+                            <p class="card-date__title">출입증 유효기간</p>
+                            <p class="card-date__day">2026.12.12까지</p>
+                        </div>
+                        <div class="user-card__footer">
+                            <p class="user-card__text">위 사람은 당사 직원임을 증명함</p>
+                            <img src="../assets/images/icon_seal.svg" alt="부산은행장직인">
+                        </div>
+                    </div>
+                    <div class="user-card tp-partner">
+                        <div class="user-card__company">
+                            <p class="card-company__title">부산은행 협력사</p>
+                            <p class="card-company__name">제이엠소프트</p>
+                        </div>
+                        <div class="user-card__picture">
+                            <img src="" alt="">
+                        </div>
+                        <div class="user-card__info">
+                            <p class="card-info__name">김협력</p>
+                            <p class="card-info__dept">
+                                부산은행 차세대 프로젝트
+                                <span class="card-info__rank">과장</span>
+                            </p>
+                        </div>
+                        <div class="user-card__date">
+                            <p class="card-date__title">출입증 유효기간</p>
+                            <p class="card-date__day">2026.12.12 ~ 2025.12.30</p>
+                        </div>
+                        <div class="user-card__footer">
+                            <p class="user-card__text">위 사람은 당사 직원임을 증명함</p>
+                            <img src="../assets/images/icon_seal.svg" alt="부산은행장직인">
+                        </div>
+                    </div>
+                    <div class="user-card tp-partner">
+                        <div class="user-card__company">
+                            <p class="card-company__title">부산은행 협력사</p>
+                            <p class="card-company__name">제이엠소프트</p>
+                        </div>
+                        <div class="user-card__picture">
+                            <img src="" alt="">
+                        </div>
+                        <div class="user-card__info">
+                            <p class="card-info__name">김협력</p>
+                            <p class="card-info__dept">
+                                부산은행 차세대 프로젝트
+                                <span class="card-info__rank">과장</span>
+                            </p>
+                        </div>
+                        <div class="user-card__date">
+                            <p class="card-date__title">
+                                출입증 유효기간
+                                <span>D-10</span>
+                            </p>
+                            <p class="card-date__day text-gray-02">2026.12.12 ~ 2025.12.30</p>
+                        </div>
+                        <div class="user-card__footer">
+                            <p class="user-card__text">위 사람은 당사 직원임을 증명함</p>
+                            <img src="../assets/images/icon_seal.svg" alt="부산은행장직인">
+                        </div>
+                    </div>
+                    <div class="user-card tp-visit">
+                        <div class="user-card__company">
+                            <p class="card-company__title">부산은행 협력사</p>
+                            <p class="card-company__name">방문</p>
+                        </div>
+                        <div class="user-card__picture">
+                            <img src="" alt="">
+                        </div>
+                        <div class="user-card__info">
+                            <p class="card-info__name">김방문</p>
+                        </div>
+                        <div class="user-card__date">
+                            <p class="card-date__title">출입증 유효기간</p>
+                            <p class="card-date__day">2026.04.30. 12:00 ~ 14:00 까지</p>
+                        </div>
+                        <div class="user-card__footer">
+                            <p class="user-card__text">위 사람은 당사 직원임을 증명함</p>
+                            <img src="../assets/images/icon_seal.svg" alt="부산은행장직인">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="content-card" style="width:100%;">
+                <h3 style="margin-bottom: 16px; font-size: 1.1rem; border-bottom: 1px solid #eee; padding-bottom: 8px;">QR</h3>
+                <div class="card-guides">  <!-- 가이드 전용 div 실무 사용X -->
+                    <button type="button" class="qr-button tp-full"><span>출입QR코드</span></button>
+                    <button type="button" class="qr-button tp-group"><span>출입QR코드</span></button>
+                    <button type="button" class="qr-button tp-partner"><span>출입QR코드</span></button>
+                    <button type="button" class="qr-button tp-visit"><span>출입QR코드</span></button>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

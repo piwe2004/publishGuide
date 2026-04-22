@@ -1,0 +1,83 @@
+/* ==========================================================================
+   1. 유연한 Flexbox 믹스인
+   - 사용법: @include flex(가로정렬, 세로정렬, 방향, 랩핑);
+   - 기본값은 중앙 정렬(center)과 가로 방향(row)으로 세팅되어 있습니다.
+   ========================================================================== */
+@mixin flex($align: center, $justify: center) {
+  display: flex;
+  align-items: $align;
+  justify-content: $justify;
+}
+
+/* (옵션) 자주 쓰는 레이아웃은 아예 숏컷 믹스인으로 빼두면 더 편합니다 */
+@mixin flex-between($align: center) {
+  display: flex;
+  justify-content: space-between;
+  align-items: $align;
+}
+
+@mixin flex-col($justify: flex-start, $align: stretch) {
+  display: flex;
+  flex-direction: column;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+/* ==========================================================================
+   2. 말줄임표 (멀티 라인 대응)
+   - utilities에서는 클래스로 썼지만, 특정 컴포넌트 안에서만 쓰고 싶을 때
+   ========================================================================== */
+@mixin line-clamp($lines: 1) {
+  @if $lines == 1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* ==========================================================================
+   3. 모바일 스크롤바 숨기기 (리스트나 가로 스와이프 영역에 필수)
+   - 기능은 작동하되, 지저분한 스크롤바 디자인만 없앱니다.
+   ========================================================================== */
+@mixin hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+}
+
+/* ==========================================================================
+   4. 가상 요소(Pseudo-element) 초기화 숏컷
+   - ::before, ::after 쓸 때 매번 적기 귀찮은 속성들을 한 번에 세팅
+   ========================================================================== */
+@mixin pseudo($display: block, $pos: absolute, $content: '') {
+  content: $content;
+  display: $display;
+  position: $pos;
+}
+
+/* ==========================================================================
+   5. 터치 영역 확장 (접근성)
+   - 눈에 보이는 버튼 크기는 작아도, 실제 터치되는 영역을 44px 이상으로 넓혀줌
+   ========================================================================== */
+@mixin touch-area($size: 44px) {
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: $size;
+    height: $size;
+    min-width: 100%;
+    min-height: 100%;
+  }
+}

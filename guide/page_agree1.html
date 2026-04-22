@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>UI 퍼블리싱 가이드</title>
+    <link rel="stylesheet" href="../assets/scss/common.css" />
+    <link rel="stylesheet" href="../assets/scss/layout.css" />
+    <link rel="stylesheet" href="../assets/scss/components.css" />
+    
+    <script src="../assets/js//plugin/jquery-4.0.0.min.js"></script>
+    <script src="../assets/js/common.js"></script>
+    <script src="../assets/js/style.js"></script>
+
+
+
+    <!-- 가이드 페이지 전용 css -->
+    <link rel="stylesheet" href="./guide.css" />
+  </head>
+  <body>
+    <form action="">
+      <div class="body-field main">
+        <div class="header-area">
+          <div class="header__side--left">
+            <button type="button" aria-label="뒤로가기">
+              <img src="../assets/images/icon_back_b.svg" alt="">
+            </button>
+          </div>
+          <div class="header__title">
+            <h2>회원가입</h2>
+          </div>
+          <div class="header__side--right"></div>
+        </div>
+        <div class="content-area main">
+          <div class="agree-field">
+            <div class="agree-field__top step-box">
+              <p class="agree-field__top step-box__left">약관동의</p>
+              <div class="step-box__right">
+                <div class="step-box__right--line step_1"></div>
+                <p class="step-box__right--text">1/3</p>
+              </div>
+            </div>
+            <div class="agree-field__list">
+              <div class="agree-box">
+                <button
+                  class="agree-label"
+                  type="button"
+                  aria-label="필수 약관내용 팝업창 열림"
+                >
+                  (필수)전체동의
+                </button>
+              </div>
+              <div class="agree-box list-type">
+                <div class="agree-box__none-line">
+                  <button
+                    class="agree-label list-button ar__down"
+                    type="button"
+                    aria-expanded="false"
+                    aria-label="하위 약관 보기"
+                  >
+                    (필수) KCB 이용을 위한 약관
+                  </button>
+                </div>
+                <div class="agree-box__list" aria-hidden="true">
+                  <ul class="agree-box__list--inner">
+                    <li class="agree-box__list-item">
+                      <input
+                        type="checkbox"
+                        name="checkItem1"
+                        id="checkItem1"
+                        tabindex="-1"
+                        aria-label="[필수]서비스 이용약관 동의"
+                      />
+                      <button
+                        class="agree-label ar__right"
+                        type="button"
+                        aria-haspopup="dialog"
+                        data-layer-btn="full1"
+                      >
+                        [필수]서비스 이용약관 동의
+                      </button>
+                    </li>
+                    <li class="agree-box__list-item">
+                      <input
+                        type="checkbox"
+                        name="checkItem2"
+                        id="checkItem2"
+                        tabindex="-1"
+                        aria-label="[필수]서비스 이용약관 동의"
+                      />
+                      <button
+                        class="agree-label ar__right"
+                        type="button"
+                        aria-haspopup="dialog"
+                      >
+                        [필수]서비스 이용약관 동의
+                      </button>
+                    </li>
+                    <li class="agree-box__list-item">
+                      <input
+                        type="checkbox"
+                        name="checkItem"
+                        id="checkItem3"
+                        tabindex="-1"
+                        aria-label="[필수]서비스 이용약관 동의"
+                      />
+                      <button
+                        class="agree-label ar__right"
+                        type="button"
+                        aria-haspopup="dialog"
+                      >
+                        [필수]서비스 이용약관 동의
+                      </button>
+                    </li>
+                    <li class="agree-box__list-item">
+                      <input
+                        type="checkbox"
+                        name="checkItem"
+                        id="checkItem4"
+                        tabindex="-1"
+                        aria-label="[필수]서비스 이용약관 동의"
+                      />
+                      <button
+                        class="agree-label ar__right"
+                        type="button"
+                        aria-haspopup="dialog"
+                      >
+                        [필수]서비스 이용약관 동의
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="agree-box list-type">
+                <div class="agree-box__none-line">
+                  <button
+                    class="agree-label list-button ar__down"
+                    type="button"
+                    aria-expanded="false"
+                    aria-label="하위 약관"
+                  >
+                    (필수) KCB 이용을 위한 약관
+                  </button>
+                </div>
+                <div class="agree-box__list" aria-hidden="true">
+                  <ul class="agree-box__list--inner">
+                    <li class="agree-box__list-item">
+                      <input
+                        type="checkbox"
+                        name="checkItem1"
+                        id="checkItem1"
+                        tabindex="-1"
+                        aria-label="[필수]서비스 이용약관 동의"
+                      />
+                      <button
+                        class="agree-label ar__right"
+                        type="button"
+                        aria-haspopup="dialog"
+                      >
+                        [필수]서비스 이용약관 동의
+                      </button>
+                    </li>
+                    <li class="agree-box__list-item">
+                      <input
+                        type="checkbox"
+                        name="checkItem2"
+                        id="checkItem2"
+                        tabindex="-1"
+                        aria-label="[필수]서비스 이용약관 동의"
+                      />
+                      <button
+                        class="agree-label ar__right"
+                        type="button"
+                        aria-haspopup="dialog"
+                      >
+                        [필수]서비스 이용약관 동의
+                      </button>
+                    </li>
+                    <li class="agree-box__list-item">
+                      <input
+                        type="checkbox"
+                        name="checkItem"
+                        id="checkItem3"
+                        tabindex="-1"
+                        aria-label="[필수]서비스 이용약관 동의"
+                      />
+                      <button
+                        class="agree-label ar__right"
+                        type="button"
+                        aria-haspopup="dialog"
+                      >
+                        [필수]서비스 이용약관 동의
+                      </button>
+                    </li>
+                    <li class="agree-box__list-item">
+                      <input
+                        type="checkbox"
+                        name="checkItem"
+                        id="checkItem4"
+                        tabindex="-1"
+                        aria-label="[필수]서비스 이용약관 동의"
+                      />
+                      <button
+                        class="agree-label ar__right"
+                        type="button"
+                        aria-haspopup="dialog"
+                      >
+                        [필수]서비스 이용약관 동의
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="agree-box">
+                <input
+                  type="checkbox"
+                  name="agree2"
+                  id="agree2"
+                  tabindex="-1"
+                  aria-label="(필수) 모바일 출입증 서비스 이용을 위한 약관"
+                />
+                <button
+                  class="agree-label ar__right"
+                  type="button"
+                  aria-haspopup="dialog"
+                >
+                  (필수) 모바일 출입증 서비스 이용을 위한 약관
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-area main">
+          <div class="button-area">
+            <button type="button" class="btn-item primary" disabled>
+              확인
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div data-layer-id="full1" class="layer-field l-full" role="dialog"aria-modal="true">
+        <div class="layer-sheet">
+            <div class="header-area">
+                <div class="header__side--left">
+                </div>
+                <div class="header__title">
+                    <h2>약관상세보기</h2>
+                </div>
+                <div class="header__side--right">
+                    <button type="button" aria-label="닫기" data-layer-cancel>
+                        <img src="../assets/images/icon_close_b.svg" alt="">
+                    </button>
+                </div>
+            </div>
+            <div class="content-area">
+                <div class="contract-box">
+                    <ul class="contract-box__tabs">
+                        <li>
+                            <button type="button" class="contract-tab" aria-selected="true" data-contractId="test1">약관1</button>
+                        </li>
+                        <li>
+                            <button type="button" class="contract-tab" aria-selected="false" data-contractId="test2">약관2</button>
+                        </li>
+                        <li>
+                            <button type="button" class="contract-tab" aria-selected="false" data-contractId="test3">약관3</button>
+                        </li>
+                        <li>
+                            <button type="button" class="contract-tab" aria-selected="false" data-contractId="test4">약관4</button>
+                        </li>
+                    </ul>
+                    <div class="contract-box__pages">
+                        <div class="pdf-viewer" aria-hidden="false" data-contract="test1">
+                            <div style="height:2000px">PDF영역1</div>
+                        </div>
+                        <div class="pdf-viewer" aria-hidden="true" data-contract="test2">PDF영역2</div>
+                        <div class="pdf-viewer" aria-hidden="true" data-contract="test3">PDF영역3</div>
+                        <div class="pdf-viewer" aria-hidden="true" data-contract="test4">PDF영역4</div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-area">
+                <div class="button-area">
+                    <button type="button" class="btn-item btn-secondary" data-layer-close>닫기</button>
+                </div>
+            </div>
+        </div>
+      </div>
+      
+    </form>
+  </body>
+  <script>
+    UI.popup.bind("full1");
+  </script>
+</html>

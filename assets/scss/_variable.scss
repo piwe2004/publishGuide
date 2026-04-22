@@ -1,0 +1,146 @@
+@charset "utf-8";
+@use "sass:math";
+/* ============================================================
+    1. Colors (BS PASS Design Guide)
+============================================================ */
+
+// BNK Primary Color
+$primary-red: #D7191F;
+$primary-darkRed: #8B0304;
+$primary-gold: #896E4A;
+$primary-darkGray: #655C4F;
+$primary-lightGray: #B7A997;
+$primary-silver: #909394;
+
+// BS PASS Primary Color
+$color-full-time: #E61920;      // 임직원 (Full-time)
+$color-full-time-light: #FF585E;
+$color-full-time-dark: #A10001;
+
+$color-group: #FF4F3B;          // 그룹 계열사 (Group)
+$color-group-light: #FF7765;
+$color-group-dark: #C5240B;
+
+$color-long-term: #00AD5C;       // 장기 출입자 (Long-term)
+$color-long-term-light: #24C57A;
+$color-long-term-dark: #00703C;
+
+$color-temporary: #0088FF;       // 일회성 출입자 (Temporary)
+$color-temporary-light: #44A8FF;
+$color-temporary-dark: #003F76;
+
+$color-vip: #D59700;             // VIP
+$color-vip-light: #FFB500;
+$color-vip-dark: #7E5900;
+
+$color-etc: #D9E0E7;             // 기타 (Etc)
+$color-etc-light: #F1F6FC;
+$color-etc-dark: #6A8097;
+
+// BS PASS Neutral
+$gray-01: #000000;
+$gray-02: #222222; // 타이틀
+$gray-03: #444444; // 본문
+$gray-04: #666666; // 4.5:1 대비용
+$gray-05: #888888;
+$gray-06: #ACACAC;
+$gray-07: #D1D1D1; // Card Outline (테두리)
+$gray-08: #E0E0E0; // BG (연한 배경)
+$gray-09: #F3F3F3; // BG
+$gray-10: #FFFFFF; // BG (화이트)
+
+// BS PASS Support
+// Error
+$color-error-01: #E22957;
+$color-error-02: #FF6889;
+$color-error-10: #FFE2E8;
+
+// Info
+$color-info-01: #2F77FF;
+$color-info-02: #71A2FF;
+$color-info-10: #CDDEFF;
+
+// Success
+$color-success-01: #00A472;
+$color-success-02: #70D5B6;
+$color-success-10: #C2FCEB;
+
+// Warning
+$color-warning-01: #FF4437;
+$color-warning-02: #FF956B;
+$color-warning-10: #FFE1D4;
+
+$dim-color: rgba(17, 24, 39, 0.6);
+
+
+/* ============================================================
+    2. Typography (Placeholder 활용)
+============================================================ */
+
+// 폰트 설정
+
+$base-font-size: 16;
+
+@function rem($px) {
+  @return math.div($px, $base-font-size) * 1rem;
+}
+
+@mixin body-24($weight) {
+  font-size: rem(24);
+  line-height: rem(36);
+  font-weight: $weight;
+}
+
+$font-bnk: 'BNKGothic', sans-serif;
+$font-pre: 'Pretendard', -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+
+// Heading (BNK Gothic)
+%head-typo-24 {
+  font-family: $font-bnk; font-size: rem(24); font-weight: 700;
+}
+%head-typo-20 {
+  font-family: $font-bnk; font-size: rem(20); font-weight: 700;
+}
+%head-typo-18 {
+  font-family: $font-bnk; font-size: rem(18); font-weight: 700;
+}
+%head-typo-14 {
+  font-family: $font-bnk; font-size: rem(14); font-weight: 700;
+}
+
+/* ============================================================
+   rem 기반 타이포그래피 (%)
+   ============================================================ */
+
+// 1. 굵기별 접미사와 수치 매핑 (Map)
+$weights: (
+  "b": 700,
+  "sb": 600,
+  "m": 500,
+  "r": 400
+);
+
+// 2. [폰트사이즈, 행간] 리스트
+// 여기에 가이드 수치만 추가하면 됩니다.
+$typo-list: (
+  (40, 56),
+  (32, 44),
+  (28, 40),
+  (24, 36),
+  (20, 32),
+  (16, 24),
+  (14, 22),
+  (12, 20)
+);
+
+// 3. For문을 이용한 자동 플레이스홀더 생성
+@each $size, $lh in $typo-list {
+  @each $name, $value in $weights {
+    // 결과 예시: %typo-b-40, %typo-sb-40 ...
+    %typo-#{$name}-#{$size} {
+      font-size: rem($size);
+      line-height: rem($lh);
+      font-weight: $value;
+    }
+  }
+}

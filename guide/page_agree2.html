@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>회원가입</title>
+    <link rel="stylesheet" href="../assets/scss/common.css" />
+    <link rel="stylesheet" href="../assets/scss/layout.css" />
+    <link rel="stylesheet" href="../assets/scss/components.css" />
+    
+    <script src="../assets/js//plugin/jquery-4.0.0.min.js"></script>
+    <script src="../assets/js/common.js"></script>
+    <script src="../assets/js/style.js"></script>
+
+
+    <!-- 가이드 페이지 전용 css -->
+    <link rel="stylesheet" href="./guide.css" />
+    </head>
+    <body>
+        <form action="">
+            <div class="body-field main">
+                <div class="header-area">
+                    <div class="header__side--left">
+                    <button type="button" aria-label="뒤로가기">
+                        <img src="../assets/images/icon_back_b.svg" alt="">
+                    </button>
+                    </div>
+                    <div class="header__title">
+                    <h2>회원가입</h2>
+                    </div>
+                    <div class="header__side--right"></div>
+                </div>
+                <div class="content-area main">
+                    <div class="agree-field">
+                        <div class="agree-field__top step-box">
+                            <p class="agree-field__top step-box__left">본인인증</p>
+                            <div class="step-box__right">
+                            <div class="step-box__right--line step_1"></div>
+                            <p class="step-box__right--text">2/3</p>
+                            </div>
+                        </div>
+                        <div class="input-area">
+                            <div class="input-field" tabindex="0">
+                                <div class="input-box tp-input">
+                                    <label for="phone1" class="input-box__label">휴대폰 번호</label>
+                                    <div class="input-box__inner" aria-hidden="true">
+                                        <input type="text" class="input-box__item user-number" inputmode="numeric" pattern="[0-9]*" maxlength="3" name="phoneNum" id="phone1" required>
+                                        <span>-</span>
+                                        <input type="text" class="input-box__item user-number" inputmode="numeric" pattern="[0-9]*" maxlength="4" name="phoneNum" id="phone2" required>
+                                        <span>-</span>
+                                        <input type="text" class="input-box__item user-number" inputmode="numeric" pattern="[0-9]*" maxlength="4" name="phoneNum" id="phone3" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-field tp-select" tabindex="0" data-layer-btn="select1">
+                                <div class="input-box">
+                                    <label for="select1_label" class="input-box__label">통신사</label>
+                                    <div class="input-box__inner" aria-hidden="true">
+                                        <input type="text" name="select1_label" id="select1_label" class="input-box__item select-value" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-field" tabindex="0">
+                                <div class="input-box tp-input">
+                                    <label for="input4" class="input-box__label">주민등록번호</label>
+                                    <div class="input-box__inner" aria-hidden="true">
+                                        <input type="text" class="input-box__item user-number" inputmode="numeric" pattern="[0-9]*" maxlength="6" name="input4" id="input4" required>
+                                        <span>-</span>
+                                        <input type="text" class="input-box__item user-number" inputmode="numeric" pattern="[0-9]*" maxlength="7" name="input5" id="input5" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-field" tabindex="0">
+                                <div class="input-box tp-input">
+                                    <label for="input1" class="input-box__label">이름</label>
+                                    <div class="input-box__inner" aria-hidden="true">
+                                        <input type="text" class="input-box__item" name="input1" id="input1" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-area main">
+                    <div class="button-area">
+                        <button type="button" class="btn-item primary" disabled>확인</button>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="layer-field l-bottom" data-layer-id="select1" data-dim-close="true" role="dialog" aria-modal="true">
+                <div class="layer-dim"></div>
+                <div class="layer-sheet">
+                    <div class="layer-sheet__handle"></div>
+                    <div class="header-area tp-layer">
+                        <div class="header__title">
+                            <h2 id="bottom-title">통신사 선택</h2>
+                        </div>
+                        <div class="header__side--right">
+                            <button type="button" aria-label="닫기" data-layer-cancel>
+                                <img src="../assets/images/icon_close_b.svg" alt="">
+                            </button>
+                        </div>
+                    </div>
+                    <div class="content-area">
+                        <ul class="select-list" data-select-list="select1" role="listbox" aria-label="OOO 선택항목"></ul>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </body>
+    <script>
+        
+        // 숫자만 입력 받아야 될때
+        $(".user-number").on("input", function(){
+            let $this = $(this);
+            // 숫자가 아닌 건 실시간으로 삭제
+            let cleaned = $this.val().replace(/[^0-9]/g, '');
+            
+            // 원래 값과 다를 때만(즉, 한글/영문이 섞였을 때만) 값을 갱신
+            if ($this.val() !== cleaned) {
+                $this.val(cleaned);
+            }
+        });
+
+
+        const testOption = [
+            {value:"1", text:"1", callback:()=>{console.log("1번")}},
+            {value:"2", text:"2", callback:()=>{console.log("2번")}},
+            {value:"3", text:"3", callback:()=>{console.log("3번")}},
+            {value:"4", text:"4", callback:()=>{console.log("4번")}},
+            {value:"5", text:"5", callback:()=>{console.log("5번")}},
+        ]
+        UI.select("select1", testOption, {
+            open_callback:()=>{console.log("팝업열림")},
+            close_callback:()=>{console.log("팝업닫힘")}
+        });
+    </script>
+</html>

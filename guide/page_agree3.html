@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>회원가입</title>
+    <link rel="stylesheet" href="../assets/scss/common.css" />
+    <link rel="stylesheet" href="../assets/scss/layout.css" />
+    <link rel="stylesheet" href="../assets/scss/components.css" />
+    
+    <script src="../assets/js//plugin/jquery-4.0.0.min.js"></script>
+    <script src="../assets/js/common.js"></script>
+    <script src="../assets/js/style.js"></script>
+
+
+    <!-- 가이드 페이지 전용 css -->
+    <link rel="stylesheet" href="./guide.css" />
+    </head>
+    <body>
+        <form action="">
+            <div class="body-field main">
+                <div class="header-area">
+                    <div class="header__side--left">
+                    <button type="button" aria-label="뒤로가기">
+                        <img src="../assets/images/icon_back_b.svg" alt="">
+                    </button>
+                    </div>
+                    <div class="header__title">
+                    <h2>회원가입</h2>
+                    </div>
+                    <div class="header__side--right"></div>
+                </div>
+                <div class="content-area main">
+                    <div class="agree-field">
+                        <div class="agree-field__top step-box">
+                            <p class="agree-field__top step-box__left">본인인증</p>
+                            <div class="step-box__right">
+                            <div class="step-box__right--line step_1"></div>
+                            <p class="step-box__right--text">2/3</p>
+                            </div>
+                        </div>
+                        <div class="input-area">
+                            <div class="input-field" tabindex="0">
+                                <div class="input-box tp-input">
+                                    <label for="phone1" class="input-box__label">휴대폰 번호</label>
+                                    <div class="input-box__inner" aria-hidden="true">
+                                        <input type="text" class="input-box__item user-number" inputmode="numeric" pattern="[0-9]*" maxlength="3" name="phoneNum" id="phone1" required>
+                                        <span>-</span>
+                                        <input type="text" class="input-box__item user-number" inputmode="numeric" pattern="[0-9]*" maxlength="4" name="phoneNum" id="phone2" required>
+                                        <span>-</span>
+                                        <input type="text" class="input-box__item user-number" inputmode="numeric" pattern="[0-9]*" maxlength="4" name="phoneNum" id="phone3" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-field tp-select" tabindex="0" data-layer-btn="select1">
+                                <div class="input-box">
+                                    <label for="select1_label" class="input-box__label">통신사</label>
+                                    <div class="input-box__inner" aria-hidden="true">
+                                        <input type="text" name="select1_label" id="select1_label" class="input-box__item select-value" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-field" tabindex="0">
+                                <div class="input-box tp-input">
+                                    <label for="input4" class="input-box__label">주민등록번호</label>
+                                    <div class="input-box__inner" aria-hidden="true">
+                                        <input type="text" class="input-box__item user-number" inputmode="numeric" pattern="[0-9]*" maxlength="6" name="input4" id="input4" required>
+                                        <span>-</span>
+                                        <input type="text" class="input-box__item user-number" inputmode="numeric" pattern="[0-9]*" maxlength="7" name="input5" id="input5" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-field" tabindex="0">
+                                <div class="input-box tp-input">
+                                    <label for="input1" class="input-box__label">이름</label>
+                                    <div class="input-box__inner" aria-hidden="true">
+                                        <input type="text" class="input-box__item" name="input1" id="input1" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-area main">
+                    <div class="button-area">
+                        <button type="button" class="btn-item primary" disabled>확인</button>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="layer-field l-bottom" data-layer-id="select1" data-dim-close="true" role="dialog" aria-modal="true">
+                <div class="layer-dim"></div>
+                <div class="layer-sheet">
+                    <div class="layer-sheet__handle"></div>
+                    <div class="header-area tp-layer">
+                        <div class="header__title">
+                            <h2 id="bottom-title">통신사 선택</h2>
+                        </div>
+                        <div class="header__side--right">
+                            <button type="button" aria-label="닫기" data-layer-cancel>
+                                <img src="../assets/images/icon_close_b.svg" alt="">
+                            </button>
+                        </div>
+                    </div>
+                    <div class="content-area">
+                        <ul class="select-list" data-select-list="select1" role="listbox" aria-label="OOO 선택항목"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div data-layer-id="full2" class="layer-field l-full" role="dialog" aria-modal="true">
+                <div class="layer-sheet">
+                    <div class="header-area tp-layer">
+                        <div class="header__side--left">
+                        </div>
+                        <div class="header__title">
+                            <h2>인증번호</h2>
+                        </div>
+                        <div class="header__side--right">
+                            <button type="button" aria-label="닫기" data-layer-cancel>
+                                <img src="../assets/images/icon_close_b.svg" alt="">
+                            </button>
+                        </div>
+                    </div>
+                    <div class="content-area tp-layer">
+                        <div class="box-column">
+                            <dl class="info-item__row tp-otp">
+                                <dt class="info-item__label">문자인증번호 입력</dt>
+                                <dd class="info-item__content">
+                                    <strong>남은시간 :</strong>
+                                    <span>02:45</span>
+                                </dd>
+                            </dl>
+                            <div class="otp-input__box">
+                                <div class="otp-input__inner">
+                                    <input type="text" class="otp-input__item" name="otp_number" id="otp_number1" aria-label="인증번호 1번째 자리" maxlength="1" inputmode="numeric" pattern="[0-9]*">
+                                    <input type="text" class="otp-input__item" name="otp_number" id="otp_number2" aria-label="인증번호 2번째 자리" maxlength="1" inputmode="numeric" pattern="[0-9]*">
+                                    <input type="text" class="otp-input__item" name="otp_number" id="otp_number3" aria-label="인증번호 3번째 자리" maxlength="1" inputmode="numeric" pattern="[0-9]*">
+                                    <input type="text" class="otp-input__item" name="otp_number" id="otp_number4" aria-label="인증번호 4번째 자리" maxlength="1" inputmode="numeric" pattern="[0-9]*">
+                                    <input type="text" class="otp-input__item" name="otp_number" id="otp_number5" aria-label="인증번호 5번째 자리" maxlength="1" inputmode="numeric" pattern="[0-9]*">
+                                    <input type="text" class="otp-input__item" name="otp_number" id="otp_number6" aria-label="인증번호 6번째 자리" maxlength="1" inputmode="numeric" pattern="[0-9]*">
+                                </div>
+                                <p class="otp-input__text is-complete">인증번호가 맞았어요</p>
+                                <!-- <p class="otp-input__text is-error">인증번호가 틀렸어요</p> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-area tp-layer">
+                        <div class="button-area">
+                            <button type="button" class="btn-item btn-secondary" data-layer-close>닫기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </body>
+    <script>
+        
+        // 숫자만 입력 받아야 될때
+        $(".user-number").on("input", function(){
+            let $this = $(this);
+            // 숫자가 아닌 건 실시간으로 삭제
+            let cleaned = $this.val().replace(/[^0-9]/g, '');
+            
+            // 원래 값과 다를 때만(즉, 한글/영문이 섞였을 때만) 값을 갱신
+            if ($this.val() !== cleaned) {
+                $this.val(cleaned);
+            }
+        });
+
+        UI.popup.open("full2");
+
+
+        // 필요시 만들어둔 인증번호 복붙 코드
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. 모든 인증번호 입력 칸을 찾습니다.
+            const otpInputs = document.querySelectorAll('.otp-input__box .otp-input__item');
+
+            otpInputs.forEach((input, index) => {
+                
+                // 타이핑 할 때 (다음 칸으로 이동)
+                input.addEventListener('input', (e) => {
+                    const target = e.target;
+                    
+                    // 숫자만 입력되도록 강제 정제 
+                    target.value = target.value.replace(/[^0-9]/g, '');
+
+                    // 입력한 값이 있다면
+                    if (target.value.length === 1) {
+                        const nextInput = otpInputs[index + 1];
+                        if (nextInput) {
+                            nextInput.focus(); // 다음 칸으로 포커스
+                        } else {
+                            // 마지막 칸까지 다 썼으면 포커스를 빼거나(blur) 완료 버튼을 활성화하는 로직 추가
+                            target.blur(); 
+                        }
+                    }
+                });
+
+                // 백스페이스 누를 때 (이전 칸으로 이동)
+                input.addEventListener('keydown', (e) => {
+                    const target = e.target;
+                    
+                    // 현재 칸이 비어있는데 백스페이스를 눌렀는지 확인
+                    if (e.key === 'Backspace' && target.value === '') {
+                        const prevInput = otpInputs[index - 1];
+                        if (prevInput) {
+                            prevInput.focus(); // 이전 칸으로 포커스 이동
+                            // (선택) 이전 칸으로 갈 때 값을 아예 지워주고 싶다면 아래 주석을 제거
+                            // prevInput.value = ''; 
+                        }
+                    }
+                });
+
+                // 붙여넣기 할 때 
+                input.addEventListener('paste', (e) => {
+                    e.preventDefault(); // 기본 붙여넣기 동작 막기
+                    
+                    // 클립보드에서 텍스트를 가져와서 숫자만 남김
+                    const pasteData = (e.clipboardData || window.clipboardData).getData('text');
+                    const numbers = pasteData.replace(/[^0-9]/g, '').split('');
+
+                    // 숫자가 있다면 현재 포커스된 칸부터 순서대로 뿌려줍니다.
+                    if (numbers.length > 0) {
+                        otpInputs.forEach((inp, i) => {
+                            // 현재 칸(index) 이후의 칸들에만 붙여넣기
+                            if (i >= index && numbers.length > 0) {
+                                inp.value = numbers.shift(); // 배열에서 하나씩 빼서 넣기
+                                inp.focus(); // 마지막에 붙여넣어진 칸에 포커스 남기기
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</html>
