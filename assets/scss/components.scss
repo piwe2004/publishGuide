@@ -8,16 +8,17 @@
 ========================================================================== */
 
 .btn-item {
-    padding: rem(10) rem(12);
+    height:rem(48);
     border-radius: rem(8);
     background-color: $gray-10;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease;
-    &:hover{
-        background-color:$gray-08;
-    }
+    @extend %typo-b-16;
+    // &:hover{
+    //     background-color:$gray-08;
+    // }
     &.btn-primary {
         background: $primary-red;
         color: $gray-10;
@@ -36,11 +37,11 @@
     }
 
     &.btn-outline {
-        border: 1px solid $gray-08;
+        border: 1px solid $primary-red;
         color: $gray-02;
         background: $gray-10;
-        &:hover {
-            background: $gray-08;
+        &.tp-gray{
+            border-color:$gray-08;
         }
     }
 
@@ -49,22 +50,69 @@
         display: flex;
     }
 
-    &.btn{
-        &-sm {
-            @extend %typo-r-14;
-            padding: rem(6) rem(12);
-            border-radius: 6px;
+    // QR버튼
+    &.btn-qr{
+        width:202px;
+        height:56px;
+        border-radius:rem(8);
+        border:1px solid;
+        @include flex(center, center);
+        > span{
+            @extend %typo-b-16;
+            @include flex(center, center);
+            gap:0 rem(12);
+            &::before{
+                width:24px;
+                height:24px;
+                display: inline-block;
+                background-position: center;
+                background-repeat:no-repeat;
+                content:'';
+            }
         }
-        &-lg {
-            @extend %typo-r-20;
-            padding: rem(14) rem(24);
-            border-radius: rem(10);
+
+        &.tp-full{
+            border-color:$color-full-time;
+            > span:before{
+                background:url(../images/icon_qr_1.svg);
+            }
         }
-        :disabled {
-            opacity: 0.5; 
-            pointer-events: none;
+        &.tp-group{
+            border-color:$color-group;
+            > span:before{
+                background:url(../images/icon_qr_2.svg);
+            }
+        }
+        &.tp-partner{
+            border-color:$color-long-term;
+            > span:before{
+                background:url(../images/icon_qr_3.svg);
+            }
+        }
+        &.tp-visit{
+            border-color:$color-temporary;
+            > span:before{
+                background:url(../images/icon_qr_4.svg);
+            }
         }
     }
+
+    &:disabled{
+        background-color:$gray-09 !important;
+        border:1px solid $gray-06 !important;
+        color:$gray-06 !important;
+    }
+
+    &.btn{
+        &-sm {
+            height:rem(32);
+            @extend %typo-b-14;
+        }
+        &-md {
+            height:rem(40);
+        }
+    }
+
 }
 
 .step-box{
@@ -273,6 +321,7 @@
                 height:20px;
                 border-radius:50%;
                 background-color:#000;
+                display: none;
             }
         }
         &.is-active{
@@ -308,6 +357,9 @@
             .#{$input-box}__label{
                 color:$gray-02;
             }
+            .#{$input-box}__clear{
+                display: block;
+            }
         }
     }
     &.is-active{
@@ -332,7 +384,7 @@
             border-color:$color-error-01;
             background-color:$gray-10;
         }
-        .#{$input-field}__text, .#{$input-box}__label, .#{$input-box}__item{
+        .#{$input-field}__text, .#{$input-box}__label{
             color:$color-error-01 !important;
         }
     }
@@ -445,7 +497,7 @@
 .dialog-ui {
     position: fixed;
     inset: 0;
-    z-index: var(--z-dialog);
+    z-index: 2000;
     display: none;
     align-items: center;
     justify-content: center;
@@ -485,7 +537,7 @@
         opacity: 0;
         width: 85%;
         max-width: 320px;
-        background: var(--bg-white);
+        background: $gray-10;
         border-radius: rem(16);
         overflow: hidden;
     }
@@ -580,7 +632,7 @@
     pointer-events: none;
     .toast-ui {
         background: rgba(31, 41, 55, 0.9);
-        color: var(--bg-white);
+        color: $gray-10;
         padding: rem(12) rem(24);
         border-radius: 30px;
         animation: toastFadeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
@@ -613,7 +665,7 @@
     .loading-item{
         width: 60px;
         height: 60px;
-        background: var(--bg-white);
+        background: $gray-10;
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -883,54 +935,6 @@
         > img{
             width:100%;
             max-width:89px;
-        }
-    }
-}
-
-
-// QR버튼
-.qr-button{
-    width:202px;
-    height:56px;
-    border-radius:rem(8);
-    border:1px solid;
-    @include flex(center, center);
-    > span{
-        @extend %typo-b-16;
-        @include flex(center, center);
-        gap:0 rem(12);
-        &::before{
-            width:24px;
-            height:24px;
-            display: inline-block;
-            background-position: center;
-            background-repeat:no-repeat;
-            content:'';
-        }
-    }
-
-    &.tp-full{
-        border-color:$color-full-time;
-        > span:before{
-            background:url(../images/icon_qr_1.svg);
-        }
-    }
-    &.tp-group{
-        border-color:$color-group;
-        > span:before{
-            background:url(../images/icon_qr_2.svg);
-        }
-    }
-    &.tp-partner{
-        border-color:$color-long-term;
-        > span:before{
-            background:url(../images/icon_qr_3.svg);
-        }
-    }
-    &.tp-visit{
-        border-color:$color-temporary;
-        > span:before{
-            background:url(../images/icon_qr_4.svg);
         }
     }
 }

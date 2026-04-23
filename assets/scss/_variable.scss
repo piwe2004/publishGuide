@@ -95,17 +95,16 @@ $font-bnk: 'BNKGothic', sans-serif;
 $font-pre: 'Pretendard', -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
 
 // Heading (BNK Gothic)
-%head-typo-24 {
-  font-family: $font-bnk; font-size: rem(24); font-weight: 700;
-}
-%head-typo-20 {
-  font-family: $font-bnk; font-size: rem(20); font-weight: 700;
-}
-%head-typo-18 {
-  font-family: $font-bnk; font-size: rem(18); font-weight: 700;
-}
-%head-typo-14 {
-  font-family: $font-bnk; font-size: rem(14); font-weight: 700;
+
+$head-list: 28, 24, 20, 18, 16, 14;
+
+@each $size in $head-list {
+    // 결과 예시: %typo-b-40, %typo-sb-40 ...
+    %head-typo-#{$size} {
+      font-family: $font-bnk;
+      font-size: rem($size);
+      font-weight: 700;
+    }
 }
 
 /* ============================================================
