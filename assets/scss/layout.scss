@@ -15,7 +15,7 @@
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
-        gap:10px;
+        gap:rem(10);
     }
 }
 .header-area{
@@ -29,12 +29,12 @@
         text-align: center;
     }
     &.header-rounded{
-        border-radius: 12px 12px 0 0;
+        border-radius: rem(12) rem(12) 0 0;
     }
     & [class^="header__side"]{
         height:100%;
         @include flex(center, center);
-        gap:0 10px;
+        gap:0 rem(10);
         > button{
             width:24px;
             height:24px;
@@ -47,16 +47,15 @@
     }
     // 텍스트 형태로 된 버튼 (예: '로그아웃')
     .btn-text {
-        font-size: 14px;
-        font-weight: 500;
-        color: #666;
-        padding: 0 4px; // 텍스트 버튼은 좌우 여백을 약간 줌
+        @extend %typo-r-14;
+        color: $gray-06;
+        padding: 0 rem(4); // 텍스트 버튼은 좌우 여백을 약간 줌
     }
 }
 
 .content-area{
     flex:1;
-    padding:10px;
+    padding:rem(10) rem(10) 68px;
     box-sizing: border-box;
     overflow-y: auto;
     &.main{
@@ -64,16 +63,18 @@
 }
 
 .footer-area{
-    padding:10px;
-    box-sizing: border-box;
-    &.main{
-    }
+    position: fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    padding:rem(10);
+
 }
 
 .input-area{
     @include flex();
     flex-direction: column;
-    gap:15px 0;
+    gap:rem(15) 0;
     > div{
         width: 100%;
     }
@@ -81,7 +82,7 @@
 
 .button-area{
     @include flex(center, space-between);
-    gap:0 10px;
+    gap:0 rem(10);
     .btn-item{
         flex:1;
     }
@@ -126,11 +127,11 @@
 .agree-field{
     display: flex;
     flex-direction: column;
-    gap:20px 0;
+    gap:rem(20) 0;
     & &__list{
         @include flex(center, center);
         flex-direction:column;
-        gap:10px 0;
+        gap:rem(10) 0;
     }
 }
 

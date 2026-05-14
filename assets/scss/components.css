@@ -32,7 +32,7 @@
   font-weight: 400;
 }
 
-.btn-item, .info-item__label, .qr-button > span {
+.btn-item, .btn-item.btn-qr > span, .info-item__label {
   font-size: 1rem;
   line-height: 1.5rem;
   font-weight: 700;
@@ -48,6 +48,12 @@
   font-size: 1rem;
   line-height: 1.5rem;
   font-weight: 500;
+}
+
+.btn-item.btn-sm {
+  font-size: 0.875rem;
+  line-height: 1.375rem;
+  font-weight: 700;
 }
 
 .user-card__date .card-date__title > span, .user-card__date .card-date__day {
@@ -94,16 +100,13 @@
     BUTTON 디자이 가이드
 ========================================================================== */
 .btn-item {
-  padding: 0.625rem 0.75rem;
+  height: 3rem;
   border-radius: 0.5rem;
   background-color: #FFFFFF;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
-}
-.btn-item:hover {
-  background-color: #E0E0E0;
 }
 .btn-item.btn-primary {
   background: #D7191F;
@@ -132,10 +135,63 @@
   width: 100%;
   display: flex;
 }
+.btn-item.btn-qr {
+  width: 202px;
+  height: 56px;
+  border-radius: 0.5rem;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-item.btn-qr > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0 0.75rem;
+}
+.btn-item.btn-qr > span::before {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  background-position: center;
+  background-repeat: no-repeat;
+  content: "";
+}
+.btn-item.btn-qr.tp-full {
+  border-color: #E61920;
+}
+.btn-item.btn-qr.tp-full > span:before {
+  background: url(../images/icon_qr_1.svg);
+}
+.btn-item.btn-qr.tp-group {
+  border-color: #FF4F3B;
+}
+.btn-item.btn-qr.tp-group > span:before {
+  background: url(../images/icon_qr_2.svg);
+}
+.btn-item.btn-qr.tp-partner {
+  border-color: #00AD5C;
+}
+.btn-item.btn-qr.tp-partner > span:before {
+  background: url(../images/icon_qr_3.svg);
+}
+.btn-item.btn-qr.tp-visit {
+  border-color: #0088FF;
+}
+.btn-item.btn-qr.tp-visit > span:before {
+  background: url(../images/icon_qr_4.svg);
+}
 .btn-item:disabled {
   background-color: #F3F3F3 !important;
   border: 1px solid #ACACAC !important;
   color: #ACACAC !important;
+}
+.btn-item.btn-sm {
+  height: 2rem;
+}
+.btn-item.btn-md {
+  height: 2.5rem;
 }
 
 .step-box {
@@ -203,7 +259,7 @@
   top: 0;
   left: 0;
 }
-.agree-box input[type=checkbox]:checked + label:before, .agree-box input[type=checkbox]:checked + .agree-label:before, .agree-box input[type=checkbox] .agree-label.checked:before, .agree-box input[type=radio]:checked + label:before, .agree-box input[type=radio]:checked + .agree-label:before, .agree-box input[type=radio] .agree-label.checked:before {
+.agree-box input[type=checkbox]:checked + label:before, .agree-box input[type=checkbox]:checked + .agree-label:before, .agree-box input[type=radio]:checked + label:before, .agree-box input[type=radio]:checked + .agree-label:before {
   background-color: #FF4437;
   border-color: #FF4437;
 }
@@ -225,6 +281,10 @@
   display: block;
   flex-shrink: 0;
   content: "";
+}
+.agree-box .agree-label.is-checked::before {
+  background-color: #FF4437;
+  border-color: #FF4437;
 }
 .agree-box__none-line .agree-label {
   border: none;
@@ -856,54 +916,6 @@
 .user-card__footer > img {
   width: 100%;
   max-width: 89px;
-}
-
-.qr-button {
-  width: 202px;
-  height: 56px;
-  border-radius: 0.5rem;
-  border: 1px solid;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.qr-button > span {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0 0.75rem;
-}
-.qr-button > span::before {
-  width: 24px;
-  height: 24px;
-  display: inline-block;
-  background-position: center;
-  background-repeat: no-repeat;
-  content: "";
-}
-.qr-button.tp-full {
-  border-color: #E61920;
-}
-.qr-button.tp-full > span:before {
-  background: url(../images/icon_qr_1.svg);
-}
-.qr-button.tp-group {
-  border-color: #FF4F3B;
-}
-.qr-button.tp-group > span:before {
-  background: url(../images/icon_qr_2.svg);
-}
-.qr-button.tp-partner {
-  border-color: #00AD5C;
-}
-.qr-button.tp-partner > span:before {
-  background: url(../images/icon_qr_3.svg);
-}
-.qr-button.tp-visit {
-  border-color: #0088FF;
-}
-.qr-button.tp-visit > span:before {
-  background: url(../images/icon_qr_4.svg);
 }
 
 .login-pass {

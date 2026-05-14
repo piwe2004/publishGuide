@@ -176,7 +176,7 @@
         position:absolute;
         top:0;
         left:0;
-        &:checked + label:before, &:checked + .agree-label:before, .agree-label.checked:before{
+        &:checked + label:before, &:checked + .agree-label:before{
             background-color:$color-warning-01;
             border-color:$color-warning-01;
         }
@@ -196,6 +196,10 @@
             display: block;
             flex-shrink:0;
             content:'';
+        }
+        &.is-checked::before{
+            background-color:$color-warning-01;
+            border-color:$color-warning-01;
         }
     }
     &__none-line{
