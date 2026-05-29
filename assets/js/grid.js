@@ -266,18 +266,19 @@ class GridTable {
         const _tdEl = document.createElement('td');
         _tdEl.setAttribute("colspan", this.columns.length);
 
-        lucide.createIcons({
-            attrs: {
-                width: 24,
-                height: 24,
-                'stroke-width': 2
-            }
-        });
+        if (window.lucide && typeof lucide.createIcons === 'function') {
+            lucide.createIcons({
+                attrs: {
+                    width: 24,
+                    height: 24,
+                    'stroke-width': 2
+                }
+            });
+        }
 
-        const _emptySvg = `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="triangle-alert" aria-hidden="true" class="lucide lucide-triangle-alert text-error-02"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg>`;
         const _emptyText = `
             <div class="d-flex align-center justify-center flex-column gap-20">
-                ${_emptySvg}
+                <i data-lucide="triangle-alert" stroke="#ff6889" width="33px" height="30px"><i>
                 <p class="text-gray-05">${message || '검색결과가 존재하지 않습니다.<br/>재검색 해주세요.'}</p>
             </div>`;
 
