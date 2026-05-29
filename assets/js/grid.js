@@ -34,7 +34,7 @@ class GridTable {
      * * @description
      * * options.columns의 header의 | 기준으로 rowspan, colspan은 작업합니다.
      */
-    constructor(targetId, options) {
+    constructor(targetId, options = {}) {
         // 전달받은 targetId의 엘리먼트를 담는 객체
         this.container = document.getElementById(targetId);
         if (!this.container) throw new Error('요소 ' + targetId + '를 찾을 수 없습니다.');
@@ -73,8 +73,8 @@ class GridTable {
             } else {
                 let _checkText;
                 // if(typeof col.width === 'undefined'){}
-                _checkText = /^\d+$/.test(col?.width?.toString()?.trim());
-                _colEl.style.width = _checkText ? `${col.width}px` : _checkText === false ? 'auto' : col.width;
+                const _checkText = /^\d+$/.test(col?.width?.toString()?.trim());
+                _colEl.style.width = _checkText ? `${col.width}px` : (col.width || 'auto');
             }
             _colgroup.appendChild(_colEl);
         });
@@ -174,10 +174,10 @@ class GridTable {
     }
 
     renderRows(gridData) {
-        this.data = gridData.map(row => ({ ...row }));
         this.tbody.innerHTML = '';
 
-        if (this.data.length === 0) {
+        if (!gridData || gridData.length === 0) {
+            this.data = [];
             this.renderEmptyRow();
             return;
         }
@@ -185,7 +185,6 @@ class GridTable {
         // column에는 있지만 rowData에는 없는 키값은 null이나 undefined로 출력
         // row 데이터를 가져올때 해당 키는 빈값이 되는 오류가 있어서 작업
         this.data = gridData.map(row => {
-            // 원본은 건드리지 않게 깊은 복사로 카피 데이터 만듬
             const orgRow = { ...row };
 
             this.columns.forEach(col => {
@@ -200,12 +199,15 @@ class GridTable {
             return orgRow;
         });
 
+        const _fragment = document.createDocumentFragment();
+
         this.data.forEach((rowData, rowIndex) => {
             const _trEl = this._makeRowElement(rowIndex);
-
-            this.tbody.appendChild(_trEl);
+            _fragment.appendChild(_trEl); // 메모리에 먼저 추가
             this._triggerEvent('onRenderRow', rowData, rowIndex);
         });
+
+        this.tbody.appendChild(_fragment); // 최종 딱 한 번만 DOM에 반영
 
         // 화면 렌더링이 끝나면 체크박스 헤더 상태를 재계산
         this.columns.forEach(_col => {
@@ -550,8 +552,9 @@ class GridTable {
                 });
             }
 
-            if (colItem.color) _tdEl.style.cssText = `color:${colItem.color}`;
-            if (colItem.background) _tdEl.style.cssText = `background:${colItem.background}`;
+            if (colItem.color) _tdEl.style.color = colItem.color;
+            if (colItem.background) _tdEl.style.background = colItem.background;
+
             _tdEl.appendChild(_innerValue);
             if (colItem.hidden) {
                 _tdEl.classList.add("gt-hidden");
