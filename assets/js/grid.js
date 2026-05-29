@@ -25,7 +25,7 @@ class GridTable {
      * @param {Object} options - 그리드 설정 옵션 객체
      * @param {Array<Object>} options.columns - 컬럼 정의 배열 (name, header, width, edit, color, background 속성 포함)
      * @param {Array<Object>} options.data - 그리드에 바인딩될 JSON 데이터 배열
-     * @param {Function} [options.onRowChanged] - 데이터 변경시 호출될 콜백 함수. (event: {rowIndex, columnName, value, rowData}) 객체를 반환합니다.
+     * @param {Function} [options_onRowChanged] - 데이터 변경시 호출될 콜백 함수. (event: {rowIndex, columnName, value, rowData}) 객체를 반환합니다.
      * * @example
      * const myGrid = new GridTable('grid', {
      * columns: [{name: 'id', header: '사번'}],
@@ -61,20 +61,25 @@ class GridTable {
 
         // 테이블 태그 생성
         this.table = Object.assign(document.createElement('table'), {
-            classList: 'grid-table'
+            className: 'grid-table'
         });
 
         // col들의 크기를 담당하는 colgroup 만듭니다.
         const _colgroup = document.createElement('colgroup');
         this.columns.forEach(col => {
             const _colEl = document.createElement('col');
+            const _colWidth = col.width;
+
             if (col.hidden) {
                 _colEl.style.width = '0px';
+            } else if (typeof _colWidth === 'number') {
+                _colEl.style.width = `${_colWidth}px`;
+            } else if (/^\d+$/.test(String(_colWidth || '').trim())) {
+                _colEl.style.width = `${_colWidth}px`;
+            } else if (_colWidth) {
+                _colEl.style.width = _colWidth;
             } else {
-                let _checkText;
-                // if(typeof col.width === 'undefined'){}
-                const _checkText = /^\d+$/.test(col?.width?.toString()?.trim());
-                _colEl.style.width = _checkText ? `${col.width}px` : (col.width || 'auto');
+                _colEl.style.width = 'auto';
             }
             _colgroup.appendChild(_colEl);
         });
@@ -88,10 +93,51 @@ class GridTable {
             ...col,
             parts: (col.header || col.name).split('|') // col의 header에서 | 기준으로 자르기
         }));
-        console.log(_parsedCols);
-
-        // colspan 최대갯수
-        const _maxDepth = Math.max(..._parsedCols.map(c => c.parts.length));
+        const _maxDepth = _parsedCols.length > 0
+            ? Math.max(..._parsedCols.map(c => c.parts.length))
+            : 0;
+ 
+        /**
+         * 각 depth(r)에서 컬럼별 "그룹 루트 인덱스"를 미리 계산합니다.
+         *
+         * 같은 텍스트라도 비연속이거나 상위 depth에서 이미 다른 그룹에
+         * 속해 있으면 별개 그룹으로 분리합니다.
+         *
+         * groupRootMap[r][c] = depth r 에서 c번 컬럼이 속한 그룹의
+         *                      시작 컬럼 인덱스 (그룹 식별자)
+         */
+        const groupRootMap = [];
+        for (let r = 0; r < _maxDepth; r++) {
+            const roots = [];
+            for (let c = 0; c < _parsedCols.length; c++) {
+                if (c === 0) {
+                    roots[c] = 0;
+                    continue;
+                }
+ 
+                const curText  = _parsedCols[c].parts.slice(0, r + 1).join('|');
+                const prevText = _parsedCols[c - 1].parts.slice(0, r + 1).join('|');
+ 
+                // 조건 1: | 로 구분된 다중 헤더 컬럼이어야 한다.
+                //          | 가 없으면 단독 셀이므로 병합 대상에서 제외한다.
+                const hasPipe = _parsedCols[c].parts.length > 1;
+ 
+                // 조건 2: 현재 depth의 텍스트 경로가 바로 앞 컬럼과 같아야 한다.
+                const sameText = (curText === prevText);
+ 
+                // 조건 3: 현재 depth가 해당 컬럼의 parts 범위 안이어야 한다.
+                //          r >= parts.length 이면 rowspan 으로 채워지는 구간이므로
+                //          colspan 병합 대상이 아니다.
+                const withinDepth = (r < _parsedCols[c].parts.length);
+ 
+                if (hasPipe && sameText && withinDepth) {
+                    roots[c] = roots[c - 1]; // 같은 그룹 → 앞 컬럼의 루트 인덱스를 이어받음
+                } else {
+                    roots[c] = c;            // 새 그룹 시작
+                }
+            }
+            groupRootMap[r] = roots;
+        }
 
         // 다중 헤더(colspan/rowspan) 처리시, 이미 병합되어 점유된 셀 좌표를 기록해 중복 생성을 막기 위한 변수
         const skipMap = {};
@@ -105,11 +151,8 @@ class GridTable {
                 const _partText = _col.parts[r] || _col.parts[_col.parts.length - 1];
 
                 let _colspan = 1;
-
-                const _currentPath = _col.parts.slice(0, r + 1).join('|');
                 for (let nextC = c + 1; nextC < _parsedCols.length; nextC++) {
-                    const nextPath = _parsedCols[nextC].parts.slice(0, r + 1).join('|');
-                    if (_currentPath === nextPath && r < _parsedCols[nextC].parts.length) {
+                    if (groupRootMap[r][nextC] === c) {
                         _colspan++;
                     } else {
                         break;
@@ -500,7 +543,7 @@ class GridTable {
                 const isTrue = (_value === true || _value === 'Y' || _value === 1);
                 _innerValue = Object.assign(document.createElement('button'), {
                     type: 'button',
-                    classList: `switch-btn ${isTrue ? 'is-active' : ''}`,
+                    className: `switch-btn ${isTrue ? 'is-active' : ''}`,
                     value: isTrue
                 });
 
